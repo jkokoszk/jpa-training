@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <util:properties id="jpaProps" location="classpath:/config/jpa.properties"/>
+    <util:properties id="flywayProps" location="classpath:/config/flyway.properties"/>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="#{jpaProps['jdbc.driverClassName']}"/>
+        <property name="url" value="#{jpaProps['jdbc.url']}"/>
+        <property name="username" value="#{jpaProps['jdbc.username']}"/>
+        <property name="password" value="#{jpaProps['jdbc.password']}"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="transactionManager,flyway">
+        <property name="persistenceUnitName" value="workshop"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaProperties" ref="jpaProps"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="packagesToScan">
+            <array>
+                <value>pl.spring.demo.entity</value>
+            </array>
+        </property>
+    </bean>
+
+    <jpa:repositories base-package="pl.spring.demo.repository" />
+
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="locations" value="#{flywayProps['flyway.locations']}"/>
+        <property name="baselineOnMigrate" value="#{flywayProps['flyway.baselineOnMigrate']}"/>
+        <property name="encoding" value="#{flywayProps['flyway.encoding']}"/>
+        <property name="table" value="#{flywayProps['flyway.tableName']}"/>
+    </bean>
+
+</beans>
