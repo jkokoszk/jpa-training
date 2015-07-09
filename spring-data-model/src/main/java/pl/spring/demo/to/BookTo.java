@@ -1,11 +1,9 @@
 package pl.spring.demo.to;
 
-import java.util.Set;
 
 public class BookTo {
     private long id;
     private String title;
-    private Set<AuthorTo> authors;
 
     // for hibernate
     protected BookTo() {
@@ -31,11 +29,4 @@ public class BookTo {
         this.title = title;
     }
 
-    public Set<AuthorTo> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(Set<AuthorTo> authors) {
-        this.authors = authors;
-    }
 }
