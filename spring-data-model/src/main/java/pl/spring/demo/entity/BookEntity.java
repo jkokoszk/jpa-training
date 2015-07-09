@@ -7,19 +7,22 @@ import java.util.Set;
 @Entity
 @Table(name = "BOOK")
 public class BookEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
+
     @Column(nullable = false, length = 50)
     private String title;
+
+    @OneToMany(mappedBy = "book")
+    private Set<BookExemplarEntity> bookExemplars;
+
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "book_author",
+    @JoinTable(name = "BOOK_AUTHOR",
             joinColumns = {@JoinColumn(name = "BOOK_ID", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})
     private Set<AuthorEntity> authors;
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "LIBRARY_ID", nullable = true)
-    private LibraryEntity library;
 
     // for hibernate
     protected BookEntity() {
@@ -29,20 +32,17 @@ public class BookEntity implements Serializable {
         this.title = title;
     }
 
+    public BookEntity(Long id, String title) {
+        this(title);
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public Set<AuthorEntity> getAuthors() {
@@ -53,7 +53,11 @@ public class BookEntity implements Serializable {
         this.authors = authors;
     }
 
-    public LibraryEntity getLibrary() {
-        return library;
+    public Set<BookExemplarEntity> getBookExemplars() {
+        return bookExemplars;
+    }
+
+    public void setBookExemplars(Set<BookExemplarEntity> bookExemplars) {
+        this.bookExemplars = bookExemplars;
     }
 }

@@ -1,70 +1,87 @@
-CREATE TABLE ADDRESS (
-    ID NUMBER(19,0) NOT NULL,
-    CITY VARCHAR2(255 CHAR),
-    POSTAL_CODE VARCHAR2(255 CHAR),
-    STREET VARCHAR2(255 CHAR),
-    STREET_NUMBER VARCHAR2(255 CHAR),
-    PRIMARY KEY (ID)
+create table author (
+    type varchar2(6 char) not null,
+    id number(19,0) not null,
+    birth_date DATE not null,
+    first_name varchar2(255 char) not null,
+    last_name varchar2(255 char) not null,
+    literary_genre varchar2(255 char),
+    primary key (id)
 );
 
-CREATE TABLE AUTHOR (
-    PUBLICATIONS NUMBER(10,0),
-    AUTHOR_ID NUMBER(19,0) NOT NULL,
-    PRIMARY KEY (AUTHOR_ID)
+create table book (
+    id number(19,0) not null,
+    title varchar2(50 char) not null,
+    primary key (id)
 );
 
-CREATE TABLE BOOK (
-    ID NUMBER(19,0) NOT NULL,
-    TITLE VARCHAR2(50 CHAR) NOT NULL,
-    LIBRARY_ID NUMBER(19,0),
-    PRIMARY KEY (ID)
+create table book_author (
+    book_id number(19,0) not null,
+    author_id number(19,0) not null,
+    primary key (book_id, author_id)
 );
 
-CREATE TABLE BOOK_AUTHOR (
-    BOOK_ID NUMBER(19,0) NOT NULL,
-    AUTHOR_ID NUMBER(19,0) NOT NULL,
-    PRIMARY KEY (BOOK_ID, AUTHOR_ID)
+create table book_exemplar (
+    id number(19,0) not null,
+    available number(1,0) not null,
+    serial_number varchar2(15 char) not null,
+    book_fk number(19,0) not null,
+    loan_fk number(19,0),
+    primary key (id)
 );
 
-CREATE TABLE LIBRARY (
-    ID NUMBER(19,0) NOT NULL,
-    NAME VARCHAR2(255 CHAR),
-    VERSION NUMBER(19,0) NOT NULL,
-    ADDRESS_ID NUMBER(19,0),
-    PRIMARY KEY (ID)
+create table customer (
+    id number(19,0) not null,
+    email varchar2(35 char) not null,
+    birth_date DATE not null,
+    first_name varchar2(255 char) not null,
+    last_name varchar2(255 char) not null,
+    phone_number varchar2(15 char) not null,
+    primary key (id)
 );
 
-CREATE TABLE PERSON (
-    ID NUMBER(19,0) NOT NULL,
-    AGE NUMBER(10,0) NOT NULL,
-    FIRST_NAME VARCHAR2(50 CHAR) NOT NULL,
-    LAST_NAME VARCHAR2(50 CHAR) NOT NULL,
-    PRIMARY KEY (ID)
+create table loan (
+    id number(19,0) not null,
+    loan_date timestamp not null,
+    customer_fk number(19,0),
+    primary key (id)
 );
 
-ALTER TABLE AUTHOR
-    ADD CONSTRAINT FK_IGKJ4JV2TI0G2K5T99U5M68BL
-    FOREIGN KEY (AUTHOR_ID)
-    REFERENCES PERSON;
+create table paper_book (
+    book_cover varchar2(255 char),
+    pages_count number(10,0) not null,
+    paper_size varchar2(255 char),
+    book_id number(19,0) not null,
+    primary key (book_id)
+);
 
-ALTER TABLE BOOK
-    ADD CONSTRAINT FK_3PKEWPPFC8DYAHQOW87UPBEMB
-    FOREIGN KEY (LIBRARY_ID)
-    REFERENCES LIBRARY;
+alter table book_author
+    add constraint FK_6cmg2roopa9a4c97uxetgf2e9
+    foreign key (author_id)
+    references author;
 
-ALTER TABLE BOOK_AUTHOR
-    ADD CONSTRAINT FK_6CMG2ROOPA9A4C97UXETGF2E9
-    FOREIGN KEY (AUTHOR_ID)
-    REFERENCES AUTHOR;
+alter table book_author
+    add constraint FK_q37qkj7serxg0bh56m450uigs
+    foreign key (book_id)
+    references book;
 
-ALTER TABLE BOOK_AUTHOR
-    ADD CONSTRAINT FK_Q37QKJ7SERXG0BH56M450UIGS
-    FOREIGN KEY (BOOK_ID)
-    REFERENCES BOOK;
+alter table book_exemplar
+    add constraint FK_6xjdyconq4lm332wdhhln9e80
+    foreign key (book_fk)
+    references book;
 
-ALTER TABLE LIBRARY
-    ADD CONSTRAINT FK_44CXNDEXSNWYP4POO41JMHWVG
-    FOREIGN KEY (ADDRESS_ID)
-    REFERENCES ADDRESS;
+alter table book_exemplar
+    add constraint FK_hp46sikojivt1quj4ybeu3sau
+    foreign key (loan_fk)
+    references loan;
 
-CREATE SEQUENCE HIBERNATE_SEQUENCE;
+alter table loan
+    add constraint FK_1r3cl8gspam5pvkukjhqma556
+    foreign key (customer_fk)
+    references customer;
+
+alter table paper_book
+    add constraint FK_cg6ld8d357tj30tqyvqk4baks
+    foreign key (book_id)
+    references book_exemplar;
+
+create sequence hibernate_sequence;
