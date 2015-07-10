@@ -1,7 +1,7 @@
 package pl.spring.demo.type;
 
 public enum LiteraryGenre {
-    CRIMINAL,
+    CRIME,
     COMEDY,
     DRAMA
 }

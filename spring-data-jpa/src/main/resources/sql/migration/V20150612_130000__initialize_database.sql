@@ -22,7 +22,6 @@ create table book_author (
 
 create table book_exemplar (
     id number(19,0) not null,
-    available number(1,0) not null,
     serial_number varchar2(15 char) not null,
     book_fk number(19,0) not null,
     loan_fk number(19,0),
@@ -47,12 +46,15 @@ create table loan (
 );
 
 create table paper_book (
-    book_cover varchar2(255 char),
+    book_cover varchar2(255 char) not null,
     pages_count number(10,0) not null,
-    paper_size varchar2(255 char),
-    book_id number(19,0) not null,
-    primary key (book_id)
+    paper_size varchar2(255 char) not null,
+    book_ex_id number(19,0) not null,
+    primary key (book_ex_id)
 );
+
+alter table book_exemplar
+    add constraint UK_q1vdbj5iwa03t5gql2e9f4fln  unique (serial_number);
 
 alter table book_author
     add constraint FK_6cmg2roopa9a4c97uxetgf2e9
@@ -80,8 +82,8 @@ alter table loan
     references customer;
 
 alter table paper_book
-    add constraint FK_cg6ld8d357tj30tqyvqk4baks
-    foreign key (book_id)
+    add constraint FK_g118bplwt41nseg340hy1g5vf
+    foreign key (book_ex_id)
     references book_exemplar;
 
 create sequence hibernate_sequence;

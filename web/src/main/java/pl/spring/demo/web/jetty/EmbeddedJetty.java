@@ -1,6 +1,7 @@
 package pl.spring.demo.web.jetty;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.springframework.core.io.ClassPathResource;
@@ -8,9 +9,12 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.DispatcherType;
 import java.io.IOException;
+import java.util.EnumSet;
 
 public class EmbeddedJetty {
 
@@ -43,6 +47,7 @@ public class EmbeddedJetty {
 
     private static ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {
         ServletContextHandler contextHandler = new ServletContextHandler();
+        contextHandler.addFilter(getEncodingFilterHolder(), "/*", EnumSet.allOf(DispatcherType.class));
         contextHandler.setErrorHandler(null);
         contextHandler.setContextPath(CONTEXT_PATH);
         contextHandler.addServlet(new ServletHolder(new DispatcherServlet(context)), MAPPING_URL);
@@ -56,6 +61,15 @@ public class EmbeddedJetty {
         context.setConfigLocation(CONFIG_LOCATION);
         context.getEnvironment().setDefaultProfiles(DEFAULT_PROFILE);
         return context;
+    }
+
+    private static FilterHolder getEncodingFilterHolder() {
+        FilterHolder filterHolder = new FilterHolder();
+
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        filterHolder.setFilter(characterEncodingFilter);
+        return filterHolder;
     }
 
 }
