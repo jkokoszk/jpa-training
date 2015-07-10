@@ -2,6 +2,7 @@ package pl.spring.demo.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,7 +16,7 @@ public class LoanEntity {
     private Date loanDate;
 
     @OneToMany(mappedBy = "loan")
-    private Set<BookExemplarEntity> bookExemplars;
+    private Set<BookExemplarEntity> bookExemplars = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_FK", nullable = true)

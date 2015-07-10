@@ -1,13 +1,14 @@
 package pl.spring.demo.to;
 
 public class BookLoanResultTo {
-    private BookLoanStatus status;
+    private final BookLoanStatus status;
+
+    public BookLoanResultTo(BookLoanStatus status) {
+        this.status = status;
+    }
 
     public BookLoanStatus getStatus() {
         return status;
     }
 
-    public void setStatus(BookLoanStatus status) {
-        this.status = status;
-    }
 }
