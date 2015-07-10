@@ -1,10 +1,10 @@
 create table author (
     type varchar2(6 char) not null,
     id number(19,0) not null,
+    nick_name varchar2(30 char),
     birth_date DATE not null,
     first_name varchar2(255 char) not null,
     last_name varchar2(255 char) not null,
-    nick_name varchar2(255 char),
     literary_genre varchar2(255 char),
     primary key (id)
 );
@@ -26,6 +26,13 @@ create table book_exemplar (
     serial_number varchar2(15 char) not null,
     book_fk number(19,0) not null,
     loan_fk number(19,0),
+    primary key (id)
+);
+
+create table book_spoiler (
+    id number(19,0) not null,
+    content clob not null,
+    book_fk number(19,0) not null,
     primary key (id)
 );
 
@@ -76,6 +83,16 @@ alter table book_exemplar
     add constraint FK_hp46sikojivt1quj4ybeu3sau
     foreign key (loan_fk)
     references loan;
+
+alter table book_spoiler
+    add constraint FK_g620l27y4bdinx1gdoah630of
+    foreign key (book_fk)
+    references book_spoiler;
+
+alter table book_spoiler
+    add constraint FK_mgug9ekyotiv467ft4o29bhng
+    foreign key (id)
+    references book;
 
 alter table loan
     add constraint FK_1r3cl8gspam5pvkukjhqma556

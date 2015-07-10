@@ -45,3 +45,6 @@ insert into book_author (author_id, book_id) values (1, 1);
 insert into book_author (author_id, book_id) values (1, 2);
 insert into book_author (author_id, book_id) values (1, 3);
 insert into book_author (author_id, book_id) values (1, 4);
+
+-- spoilers
+insert into book_spoiler(id, book_fk, content) values (1, 1, 'Od śmierci Elizabeth z rąk seryjnego zabójcy minęło osiem lat, ale młody lekarz David Beck nie potrafi o niej zapomnieć. Niespodziewanie pocztą elektroniczną otrzymuje niezbity dowód, że jego żona nadal żyje. Jak to możliwe, skoro jej ciało zostało zidentyfikowane ponad wszelką wątpliwość? Beck ignoruje ostrzeżenie ''nie mów nikomu'' i próbuje dotrzeć do sedna mrocznej tajemnicy, której ślady...');

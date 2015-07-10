@@ -24,6 +24,11 @@ public class BookEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})
     private Set<AuthorEntity> authors;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "BOOK_SPOILER",
+            inverseJoinColumns = {@JoinColumn(name = "BOOK_FK", nullable = false, updatable = false)})
+    private BookSpoilerEntity bookSpoiler;
+
     // for hibernate
     protected BookEntity() {
     }
@@ -59,5 +64,13 @@ public class BookEntity implements Serializable {
 
     public void setBookExemplars(Set<BookExemplarEntity> bookExemplars) {
         this.bookExemplars = bookExemplars;
+    }
+
+    public BookSpoilerEntity getBookSpoiler() {
+        return bookSpoiler;
+    }
+
+    public void setBookSpoiler(BookSpoilerEntity bookSpoiler) {
+        this.bookSpoiler = bookSpoiler;
     }
 }
