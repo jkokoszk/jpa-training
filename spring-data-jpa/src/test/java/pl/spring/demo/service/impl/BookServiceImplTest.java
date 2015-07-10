@@ -61,7 +61,7 @@ public class BookServiceImplTest {
         // when
         List<BookTo> results = bookService.findBooks(new BookSearchCriteriaTo());
         // then
-        assertSame(bookTos, results);
+        assertEquals(bookTos, results);
     }
 
 
