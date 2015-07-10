@@ -74,4 +74,5 @@ public class BookEntity implements Serializable {
     public void setBookSpoiler(BookSpoilerEntity bookSpoiler) {
         this.bookSpoiler = bookSpoiler;
     }
+
 }
