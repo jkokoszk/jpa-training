@@ -14,6 +14,10 @@ public class PersonalData {
     @Column(columnDefinition="DATE", nullable = false)
     private Date birthDate;
 
+    // for Hibernate
+    protected PersonalData() {
+    }
+
     public PersonalData(String firstName, String lastName, Date birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;

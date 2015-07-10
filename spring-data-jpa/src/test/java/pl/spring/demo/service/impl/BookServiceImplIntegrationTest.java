@@ -13,7 +13,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class BookServiceImplIntegrationTest {
+public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
 
     @Autowired
     private BookService bookService;
@@ -26,4 +26,5 @@ public class BookServiceImplIntegrationTest {
         List<BookTo> books = bookService.findBooks(new BookSearchCriteriaTo());
         // then
     }
+
 }
