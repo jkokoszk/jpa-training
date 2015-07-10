@@ -21,11 +21,11 @@ public class WriterEntity extends AuthorEntity implements Serializable {
         super();
     }
 
-    protected WriterEntity(PersonalData personalData, LiteraryGenre literaryGenre, String nickName) {
+    public WriterEntity(PersonalData personalData, LiteraryGenre literaryGenre, String nickName) {
         this(null, personalData, literaryGenre, nickName);
     }
 
-    protected WriterEntity(Long id, PersonalData personalData, LiteraryGenre literaryGenre, String nickName) {
+    public WriterEntity(Long id, PersonalData personalData, LiteraryGenre literaryGenre, String nickName) {
         super(id, personalData, nickName);
         this.literaryGenre = literaryGenre;
     }

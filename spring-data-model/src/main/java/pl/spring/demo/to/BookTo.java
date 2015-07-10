@@ -1,16 +1,17 @@
 package pl.spring.demo.to;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BookTo {
     private long id;
     private String title;
 
-    // for hibernate
-    protected BookTo() {
-    }
+    private List<AuthorTo> authors = new ArrayList<>();
 
-    public BookTo(String title) {
-        this.title = title;
+    public BookTo() {
+
     }
 
     public Long getId() {
@@ -29,4 +30,11 @@ public class BookTo {
         this.title = title;
     }
 
+    public List<AuthorTo> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<AuthorTo> authors) {
+        this.authors = authors;
+    }
 }

@@ -1,5 +1,5 @@
 -- authors
-insert into author (id, type, birth_date, first_name, last_name, nick_name, literary_genre) values (2, 'WRITER', TO_DATE('1622/01/15', 'yyyy/mm/dd'), 'Harlan', 'Coben', 'Molier', 'COMEDY');
+insert into author (id, type, birth_date, first_name, last_name, nick_name, literary_genre) values (2, 'WRITER', TO_DATE('1622/01/15', 'yyyy/mm/dd'), 'Jean', 'Poquelin', 'Molier', 'COMEDY');
 
 -- books
 insert into book (id, title) values (5, 'Rogacz z urojenia');
