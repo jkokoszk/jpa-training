@@ -3,6 +3,7 @@ package pl.spring.demo.web.jetty;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.component.LifeCycle;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -11,6 +12,8 @@ import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class EmbeddedJetty {
 
@@ -34,14 +37,21 @@ public class EmbeddedJetty {
         return DEFAULT_PORT;
     }
 
-    private void startJetty(int port) throws Exception {
+    protected LifeCycle startJetty(int port) throws Exception {
         Server server = new Server(port);
         server.setHandler(getServletContextHandler(getContext()));
+        addListeners(server);
+
         server.start();
         server.join();
+        return server;
     }
 
-    private static ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {
+    private void addListeners(Server server) {
+        createListeners().forEach(server::addLifeCycleListener);
+    }
+
+    private ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {
         ServletContextHandler contextHandler = new ServletContextHandler();
         contextHandler.setErrorHandler(null);
         contextHandler.setContextPath(CONTEXT_PATH);
@@ -51,11 +61,15 @@ public class EmbeddedJetty {
         return contextHandler;
     }
 
-    private static WebApplicationContext getContext() {
+    private WebApplicationContext getContext() {
         XmlWebApplicationContext context = new XmlWebApplicationContext();
         context.setConfigLocation(CONFIG_LOCATION);
         context.getEnvironment().setDefaultProfiles(DEFAULT_PROFILE);
         return context;
+    }
+
+    protected List<LifeCycle.Listener> createListeners() {
+        return Collections.emptyList();
     }
 
 }

@@ -6,10 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import pl.spring.demo.service.BookService;
-import pl.spring.demo.to.BookLoanRequestTo;
-import pl.spring.demo.to.BookLoanResultTo;
-import pl.spring.demo.to.BookSearchCriteriaTo;
-import pl.spring.demo.to.BookTo;
+import pl.spring.demo.to.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +44,7 @@ public class BookRestServiceTest {
     public void loanBookShouldCallService() {
         // given
         BookLoanRequestTo bookLoanRequest = new BookLoanRequestTo();
-        BookLoanResultTo bookLoanResult = new BookLoanResultTo();
+        BookLoanResultTo bookLoanResult = new BookLoanResultTo(BookLoanStatus.SUCCESS);
         when(bookService.loanBook(bookLoanRequest)).thenReturn(bookLoanResult);
         // when
         BookLoanResultTo result = bookRestService.loanBook(bookLoanRequest);

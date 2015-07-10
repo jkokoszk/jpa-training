@@ -2,6 +2,7 @@ package pl.spring.demo.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,13 +17,13 @@ public class BookEntity implements Serializable {
     private String title;
 
     @OneToMany(mappedBy = "book")
-    private Set<BookExemplarEntity> bookExemplars;
+    private Set<BookExemplarEntity> bookExemplars = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "BOOK_AUTHOR",
             joinColumns = {@JoinColumn(name = "BOOK_ID", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})
-    private Set<AuthorEntity> authors;
+    private Set<AuthorEntity> authors = new HashSet<>();
 
     // for hibernate
     protected BookEntity() {

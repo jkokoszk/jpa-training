@@ -3,6 +3,7 @@ package pl.spring.demo.entity;
 import pl.spring.demo.type.PersonalData;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,7 +25,7 @@ public class CustomerEntity {
     private String email;
 
     @OneToMany(mappedBy = "customerEntity")
-    private Set<LoanEntity> loans;
+    private Set<LoanEntity> loans = new HashSet<>();
 
     // for hibernate
     protected CustomerEntity() {
