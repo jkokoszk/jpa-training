@@ -1,5 +1,5 @@
 -- authors
-insert into author (id, type, birth_date, first_name, last_name, literary_genre) values (1, 'WRITER', TO_DATE('2003/07/09', 'yyyy/mm/dd'), 'Harlan', 'Coben', 'CRIME');
+insert into author (id, type, birth_date, first_name, last_name, literary_genre) values (1, 'WRITER', TO_DATE('1962/01/04', 'yyyy/mm/dd'), 'Harlan', 'Coben', 'CRIME');
 
 -- books
 insert into book (id, title) values (1, 'Nie mów nikomu');
@@ -39,3 +39,9 @@ insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values 
 insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values (11, 'SOFT', 98, 'A_5');
 insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values (12, 'SOFT', 56, 'B_4');
 insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values (13, 'HARD', 333, 'A_4');
+
+-- book_author
+insert into book_author (author_id, book_id) values (1, 1);
+insert into book_author (author_id, book_id) values (1, 2);
+insert into book_author (author_id, book_id) values (1, 3);
+insert into book_author (author_id, book_id) values (1, 4);

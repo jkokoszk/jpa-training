@@ -43,6 +43,7 @@ public class EmbeddedJetty {
         server.setHandler(getServletContextHandler(getContext()));
         server.start();
         server.join();
+        server.stop();
     }
 
     private static ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {

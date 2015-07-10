@@ -4,6 +4,7 @@ create table author (
     birth_date DATE not null,
     first_name varchar2(255 char) not null,
     last_name varchar2(255 char) not null,
+    nick_name varchar2(255 char),
     literary_genre varchar2(255 char),
     primary key (id)
 );
