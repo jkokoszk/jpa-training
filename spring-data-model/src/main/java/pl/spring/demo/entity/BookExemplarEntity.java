@@ -12,10 +12,8 @@ public abstract class BookExemplarEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 15, unique = true)
     protected String serialNumber;
-
-    protected boolean available;
 
     @ManyToOne
     @JoinColumn(name = "BOOK_FK", nullable = false)
@@ -29,13 +27,12 @@ public abstract class BookExemplarEntity implements Serializable {
     protected BookExemplarEntity() {
     }
 
-    public BookExemplarEntity(String serialNumber, boolean available) {
+    public BookExemplarEntity(String serialNumber) {
         this.serialNumber = serialNumber;
-        this.available = available;
     }
 
-    public BookExemplarEntity(Long id, String serialNumber, boolean available) {
-        this(serialNumber, available);
+    public BookExemplarEntity(Long id, String serialNumber) {
+        this(serialNumber);
         this.id = id;
     }
 
@@ -51,9 +48,6 @@ public abstract class BookExemplarEntity implements Serializable {
         return serialNumber;
     }
 
-    public boolean isAvailable() {
-        return available;
-    }
 
     public BookEntity getBook() {
         return book;

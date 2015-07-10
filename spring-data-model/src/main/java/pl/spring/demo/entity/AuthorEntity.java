@@ -15,6 +15,9 @@ public abstract class AuthorEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    @Column(nullable = true, length = 30)
+    private String nickName;
+
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "firstName", column = @Column(name = "FIRST_NAME", nullable = false)),
@@ -27,12 +30,13 @@ public abstract class AuthorEntity implements Serializable {
 
     }
 
-    protected AuthorEntity(PersonalData personalData) {
+    protected AuthorEntity(PersonalData personalData, String nickName) {
         this.personalData = personalData;
+        this.nickName = nickName;
     }
 
-    protected AuthorEntity(Long id, PersonalData personalData) {
-        this(personalData);
+    protected AuthorEntity(Long id, PersonalData personalData, String nickName) {
+        this(personalData, nickName);
         this.id = id;
     }
 
@@ -42,5 +46,9 @@ public abstract class AuthorEntity implements Serializable {
 
     public PersonalData getPersonalData() {
         return personalData;
+    }
+
+    public String getNickName() {
+        return nickName;
     }
 }

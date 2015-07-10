@@ -1,6 +1,7 @@
 package pl.spring.demo.web.jetty;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
@@ -9,11 +10,14 @@ import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import javax.servlet.DispatcherType;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.EnumSet;
 
 public class EmbeddedJetty {
 
@@ -47,12 +51,17 @@ public class EmbeddedJetty {
         return server;
     }
 
+    protected List<LifeCycle.Listener> createListeners() {
+        return Collections.emptyList();
+    }
+
     private void addListeners(Server server) {
         createListeners().forEach(server::addLifeCycleListener);
     }
 
     private ServletContextHandler getServletContextHandler(WebApplicationContext context) throws IOException {
         ServletContextHandler contextHandler = new ServletContextHandler();
+        contextHandler.addFilter(getEncodingFilterHolder(), "/*", EnumSet.allOf(DispatcherType.class));
         contextHandler.setErrorHandler(null);
         contextHandler.setContextPath(CONTEXT_PATH);
         contextHandler.addServlet(new ServletHolder(new DispatcherServlet(context)), MAPPING_URL);
@@ -68,8 +77,15 @@ public class EmbeddedJetty {
         return context;
     }
 
-    protected List<LifeCycle.Listener> createListeners() {
-        return Collections.emptyList();
+    
+
+    private FilterHolder getEncodingFilterHolder() {
+        FilterHolder filterHolder = new FilterHolder();
+
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        filterHolder.setFilter(characterEncodingFilter);
+        return filterHolder;
     }
 
 }
