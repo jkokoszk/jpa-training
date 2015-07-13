@@ -1,10 +1,7 @@
 package pl.spring.demo.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.to.BookLoanRequestTo;
 import pl.spring.demo.to.BookLoanResultTo;
@@ -20,11 +17,13 @@ public class BookRestService {
     private BookService bookService;
 
     @RequestMapping(value = "/books", method = RequestMethod.GET)
+    @ResponseBody
     public List<BookTo> findBooks(BookSearchCriteriaTo searchCriteria) {
         return bookService.findBooks(searchCriteria);
     }
 
     @RequestMapping(value = "/book-loan", method = RequestMethod.POST)
+    @ResponseBody
     public BookLoanResultTo loanBook(@RequestBody BookLoanRequestTo bookLoanRequest) {
         return bookService.loanBook(bookLoanRequest);
     }
