@@ -24,6 +24,11 @@ public class BookSpoilerEntity implements Serializable {
         this.content = content;
     }
 
+    public BookSpoilerEntity(Long id, String content) {
+        this(content);
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

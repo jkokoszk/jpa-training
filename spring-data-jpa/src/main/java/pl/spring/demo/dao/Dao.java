@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface Dao<T, K extends Serializable> {
 
-    void save(T entity);
+    T save(T entity);
 
-    T getReference(K id);
+    T getOne(K id);
 
     T find(K id);
 

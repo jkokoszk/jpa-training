@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "PAPER_BOOK")
 @PrimaryKeyJoinColumn(name = "book_ex_id", referencedColumnName = "id")
-public class PaperBookEntity extends BookExemplarEntity {
+public class PaperBookExemplarEntity extends BookExemplarEntity {
 
     private int pagesCount;
 
@@ -21,15 +21,15 @@ public class PaperBookEntity extends BookExemplarEntity {
     private BookCover bookCover;
 
     // for hibernate
-    protected PaperBookEntity() {
+    protected PaperBookExemplarEntity() {
         super();
     }
 
-    public PaperBookEntity(String serialNumber, int pagesCount, PaperSize paperSize, BookCover bookCover) {
+    public PaperBookExemplarEntity(String serialNumber, int pagesCount, PaperSize paperSize, BookCover bookCover) {
         this(null, serialNumber, pagesCount, paperSize, bookCover);
     }
 
-    public PaperBookEntity(Long id, String serialNumber, int pagesCount, PaperSize paperSize, BookCover bookCover) {
+    public PaperBookExemplarEntity(Long id, String serialNumber, int pagesCount, PaperSize paperSize, BookCover bookCover) {
         super(id, serialNumber);
         this.pagesCount = pagesCount;
         this.paperSize = paperSize;

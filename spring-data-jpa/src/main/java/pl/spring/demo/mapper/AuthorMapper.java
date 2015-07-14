@@ -1,6 +1,7 @@
 package pl.spring.demo.mapper;
 
 import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import pl.spring.demo.entity.AuthorEntity;
 import pl.spring.demo.entity.WriterEntity;
 import pl.spring.demo.to.AuthorTo;
@@ -12,7 +13,7 @@ public class AuthorMapper extends AbstractMapper<AuthorEntity, AuthorTo> {
     @Override
     public AuthorTo mapSource(AuthorEntity source) {
         if (isWriter(source)) {
-            return mapWriter((WriterEntity) source);
+            return mapWriter((WriterEntity) unwrap(source));
         }
 
         return null;
@@ -57,5 +58,13 @@ public class AuthorMapper extends AbstractMapper<AuthorEntity, AuthorTo> {
 
     private boolean isWriter(AuthorTo to) {
         return to != null && to instanceof WriterTo;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T unwrap(T o) {
+        if (o instanceof HibernateProxy)
+            return (T) ((HibernateProxy)o).getHibernateLazyInitializer().getImplementation();
+        else
+            return o;
     }
 }

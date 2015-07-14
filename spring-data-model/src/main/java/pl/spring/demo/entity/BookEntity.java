@@ -16,7 +16,7 @@ public class BookEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String title;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private Set<BookExemplarEntity> bookExemplars = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -25,9 +25,10 @@ public class BookEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})
     private Set<AuthorEntity> authors = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    // TODO AO nullable should be false!
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "BOOK_SPOILER",
-            inverseJoinColumns = {@JoinColumn(name = "BOOK_FK", nullable = false, updatable = false)})
+            inverseJoinColumns = {@JoinColumn(name = "BOOK_FK", nullable = true, updatable = false)})
     private BookSpoilerEntity bookSpoiler;
 
     // for hibernate
