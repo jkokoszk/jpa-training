@@ -28,4 +28,8 @@
         <constructor-arg value="pl.spring.demo.service.BookService" />
     </bean>
 
+    <bean id="bookCache" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="pl.spring.demo.cache.BookCache" />
+    </bean>
+
 </beans>

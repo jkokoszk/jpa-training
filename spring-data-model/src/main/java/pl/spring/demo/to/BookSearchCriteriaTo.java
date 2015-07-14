@@ -1,5 +1,7 @@
 package pl.spring.demo.to;
 
+import com.google.common.base.Objects;
+
 public class BookSearchCriteriaTo {
 
     private String title;
@@ -37,5 +39,23 @@ public class BookSearchCriteriaTo {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BookSearchCriteriaTo that = (BookSearchCriteriaTo) o;
+
+        return Objects.equal(author, that.author)
+                && Objects.equal(available, that.available)
+                && Objects.equal(hasEBook, that.hasEBook)
+                && Objects.equal(title, that.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(author, available, hasEBook, title);
     }
 }

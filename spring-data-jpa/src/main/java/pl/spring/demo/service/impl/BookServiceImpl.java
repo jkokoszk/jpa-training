@@ -22,23 +22,23 @@ import java.util.List;
 @Transactional
 public class BookServiceImpl implements BookService {
 
-    @Autowired
-    private BookMapper bookMapper;
+    private final BookMapper bookMapper;
+    private final CurrentDateProvider currentDateProvider;
+    private final BookDao bookDao;
+    private final CustomerDao customerDao;
+    private final LoanDao loanDao;
+    private final BookExemplarDao bookExemplarDao;
 
     @Autowired
-    private CurrentDateProvider currentDateProvider;
-
-    @Autowired
-    private BookDao bookDao;
-
-    @Autowired
-    private CustomerDao customerDao;
-
-    @Autowired
-    private LoanDao loanDao;
-
-    @Autowired
-    private BookExemplarDao bookExemplarDao;
+    public BookServiceImpl(BookMapper bookMapper, CurrentDateProvider currentDateProvider, BookDao bookDao, CustomerDao customerDao,
+                           LoanDao loanDao, BookExemplarDao bookExemplarDao) {
+        this.bookMapper = bookMapper;
+        this.currentDateProvider = currentDateProvider;
+        this.bookDao = bookDao;
+        this.customerDao = customerDao;
+        this.loanDao = loanDao;
+        this.bookExemplarDao = bookExemplarDao;
+    }
 
     @Override
     public List<BookTo> findBooks(BookSearchCriteriaTo searchCriteria) {
