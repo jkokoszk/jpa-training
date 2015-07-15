@@ -16,8 +16,12 @@ import java.util.stream.Collectors;
 @Component
 public class BookMapper extends AbstractMapper<BookEntity, BookTo> {
 
+    private final AuthorDao authorDao;
+
     @Autowired
-    private AuthorDao authorDao;
+    public BookMapper(AuthorDao authorDao) {
+        this.authorDao = authorDao;
+    }
 
     @Override
     public BookTo mapSource(BookEntity source) {

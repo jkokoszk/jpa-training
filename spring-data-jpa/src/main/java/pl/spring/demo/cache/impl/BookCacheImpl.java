@@ -20,7 +20,7 @@ public class BookCacheImpl implements BookCache {
         this.bookService = bookService;
     }
 
-    @Cacheable(value = "books", key = "T(pl.spring.demo.cache.CacheKeyProvider).generateKey(#this.methodName, #this.args)")
+    @Cacheable(value = "books", keyGenerator = "cacheKeyProvider")
     @Override
     public List<BookTo> findBooks(BookSearchCriteriaTo searchCriteria) {
         return bookService.findBooks(searchCriteria);
