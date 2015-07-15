@@ -1,7 +1,5 @@
 package pl.spring.demo.service.impl;
 
-import junit.framework.TestCase;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
     }
 
     @Test
-     public void testShouldCreateNewBook() {
+    public void testShouldCreateNewBook() {
         // given
         NewBookTo bookToSave = new NewBookTo();
         bookToSave.setTitle("Title of new book");
@@ -71,9 +69,21 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
         bookToSave.setTitle("Title of new book");
         bookToSave.setAuthors(new HashSet<>(Arrays.asList(idOfNonExistentAuthor)));
         // when
-        BookTo alreadySavedBook = bookService.createBook(bookToSave);
+        bookService.createBook(bookToSave);
         // then
         fail("Should end with EntityNotFoundException");
+    }
+
+    @Test
+    public void testShouldCreateNewBookWithSpoiler() {
+        // given
+        NewBookTo bookToSave = new NewBookTo();
+        bookToSave.setTitle("Title of new book");
+        bookToSave.setSpoiler("Spoiler sample");
+        // when
+        BookTo alreadySavedBook = bookService.createBook(bookToSave);
+        // then
+        assertNotNull(alreadySavedBook.getId());
     }
 
 }

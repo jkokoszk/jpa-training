@@ -25,10 +25,7 @@ public class BookEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})
     private Set<AuthorEntity> authors = new HashSet<>();
 
-    // TODO AO nullable should be false!
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "BOOK_SPOILER",
-            inverseJoinColumns = {@JoinColumn(name = "BOOK_FK", nullable = true, updatable = false)})
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
     private BookSpoilerEntity bookSpoiler;
 
     // for hibernate
@@ -73,7 +70,9 @@ public class BookEntity implements Serializable {
     }
 
     public void setBookSpoiler(BookSpoilerEntity bookSpoiler) {
+        if (bookSpoiler != null) {
+            bookSpoiler.setBook(this);
+        }
         this.bookSpoiler = bookSpoiler;
     }
-
 }
