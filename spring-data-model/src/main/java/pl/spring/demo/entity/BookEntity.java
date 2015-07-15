@@ -25,7 +25,8 @@ public class BookEntity implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false)})
     private Set<AuthorEntity> authors = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
+    @OneToOne
+    @JoinColumn(name = "spoiler_fk", nullable = true, updatable = true)
     private BookSpoilerEntity bookSpoiler;
 
     // for hibernate

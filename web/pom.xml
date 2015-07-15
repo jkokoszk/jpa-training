@@ -52,15 +52,6 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.framework.version}</version>
         </dependency>
-        <!-- LogBack dependencies -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-        </dependency>
         <!--Test dependencies-->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
