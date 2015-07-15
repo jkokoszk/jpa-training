@@ -16,6 +16,10 @@ public class BookSpoilerEntity implements Serializable {
     @Column(nullable = false)
     private String content;
 
+    @OneToOne(optional = false)
+    @JoinColumn(name = "BOOK_FK", updatable = false, nullable = false)
+    private BookEntity book;
+
     // for hibernate
     protected BookSpoilerEntity() {
     }
@@ -24,11 +28,20 @@ public class BookSpoilerEntity implements Serializable {
         this.content = content;
     }
 
+    public BookSpoilerEntity(Long id, String content) {
+        this(content);
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
 
     public String getContent() {
         return content;
+    }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 }

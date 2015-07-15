@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class BookServiceImpl implements BookService {
 
     private final BookMapper bookMapper;
@@ -41,12 +41,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public BookTo findBookById(long bookId) {
+        return bookMapper.mapSource(bookDao.find(bookId));
+    }
+
+    @Override
     public List<BookTo> findBooks(BookSearchCriteriaTo searchCriteria) {
         List<BookEntity> books = bookDao.findBooks(searchCriteria);
         return new ArrayList<>(bookMapper.mapSourceCollection(books));
     }
 
     @Override
+    @Transactional(readOnly = false)
     public BookLoanResultTo loanBook(BookLoanRequestTo bookLoanRequest) {
         boolean isBookExemplarBorrowed = bookExemplarDao.isBookExemplarBorrowed(bookLoanRequest.getBookExemplarId());
         if (isBookExemplarBorrowed) {
@@ -55,10 +61,18 @@ public class BookServiceImpl implements BookService {
 
         Date currentDate = currentDateProvider.getCurrentDate();
         LoanEntity loan = new LoanEntity(currentDate);
-        loan.setCustomerEntity(customerDao.getReference(bookLoanRequest.getCustomerId()));
-        loan.getBookExemplars().add(bookExemplarDao.getReference(bookLoanRequest.getBookExemplarId()));
+        loan.setCustomerEntity(customerDao.getOne(bookLoanRequest.getCustomerId()));
+        loan.getBookExemplars().add(bookExemplarDao.getOne(bookLoanRequest.getBookExemplarId()));
         loanDao.save(loan);
 
         return new BookLoanResultTo(BookLoanStatus.SUCCESS);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public BookTo createBook(NewBookTo bookToSave) {
+        BookEntity bookEntity = bookMapper.mapNewBook(bookToSave);
+        bookEntity = bookDao.save(bookEntity);
+        return bookMapper.mapSource(bookEntity);
     }
 }

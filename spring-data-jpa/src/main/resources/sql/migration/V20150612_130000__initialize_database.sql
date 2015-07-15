@@ -1,3 +1,9 @@
+create table audio_book (
+    format varchar2(255 char) not null,
+    book_ex_id number(19,0) not null,
+    primary key (book_ex_id)
+);
+
 create table author (
     type varchar2(6 char) not null,
     id number(19,0) not null,
@@ -32,7 +38,7 @@ create table book_exemplar (
 create table book_spoiler (
     id number(19,0) not null,
     content clob not null,
-    book_fk number(19,0) not null,
+    book_fk number(19,0),
     primary key (id)
 );
 
@@ -63,6 +69,11 @@ create table paper_book (
 
 alter table book_exemplar
     add constraint UK_q1vdbj5iwa03t5gql2e9f4fln  unique (serial_number);
+
+alter table audio_book
+    add constraint FK_g3p0e2brkdj8ass285bspwx3d
+    foreign key (book_ex_id)
+    references book_exemplar;
 
 alter table book_author
     add constraint FK_6cmg2roopa9a4c97uxetgf2e9

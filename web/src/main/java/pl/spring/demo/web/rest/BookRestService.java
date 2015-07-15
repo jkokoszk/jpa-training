@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.spring.demo.cache.BookCache;
 import pl.spring.demo.service.BookService;
-import pl.spring.demo.to.BookLoanRequestTo;
-import pl.spring.demo.to.BookLoanResultTo;
-import pl.spring.demo.to.BookSearchCriteriaTo;
-import pl.spring.demo.to.BookTo;
+import pl.spring.demo.to.*;
 
 import java.util.List;
 
@@ -39,6 +36,12 @@ public class BookRestService {
     @ResponseBody
     public BookLoanResultTo loanBook(@RequestBody BookLoanRequestTo bookLoanRequest) {
         return bookService.loanBook(bookLoanRequest);
+    }
+
+    @RequestMapping(value = "/book", method = RequestMethod.POST)
+    @ResponseBody
+    public BookTo createBook(@RequestBody NewBookTo bookToSave) {
+        return bookService.createBook(bookToSave);
     }
 
 }

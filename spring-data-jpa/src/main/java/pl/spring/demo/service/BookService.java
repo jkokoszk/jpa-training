@@ -1,14 +1,16 @@
 package pl.spring.demo.service;
 
-import pl.spring.demo.to.BookLoanRequestTo;
-import pl.spring.demo.to.BookLoanResultTo;
-import pl.spring.demo.to.BookSearchCriteriaTo;
-import pl.spring.demo.to.BookTo;
+import pl.spring.demo.to.*;
 
 import java.util.List;
 
 public interface BookService {
+
+    BookTo findBookById(long bookId);
+
     List<BookTo> findBooks(BookSearchCriteriaTo searchCriteria);
 
     BookLoanResultTo loanBook(BookLoanRequestTo bookLoanRequest);
+
+    BookTo createBook(NewBookTo bookToSave);
 }

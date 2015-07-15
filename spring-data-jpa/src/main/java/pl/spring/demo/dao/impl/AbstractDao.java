@@ -3,7 +3,6 @@ package pl.spring.demo.dao.impl;
 import pl.spring.demo.dao.Dao;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -22,13 +21,14 @@ public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K
     private Class<T> domainClass;
 
     @Override
-    public void save(T entity) {
+    public T save(T entity) {
         entityManager.persist(entity);
+        return entity;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public T getReference(K id) {
+    public T getOne(K id) {
         return entityManager.getReference(getDomainClass(), id);
     }
 
@@ -60,7 +60,7 @@ public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K
 
     @Override
     public void delete(K id) {
-        entityManager.remove(getReference(id));
+        entityManager.remove(getOne(id));
     }
 
     @Override
@@ -76,7 +76,7 @@ public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K
     @Override
     public boolean exists(K id) {
         // TODO fix it, probably find one is needed
-        return getReference(id) != null;
+        return getOne(id) != null;
     }
 
     @SuppressWarnings("unchecked")
