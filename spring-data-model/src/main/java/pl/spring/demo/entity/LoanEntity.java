@@ -39,8 +39,9 @@ public class LoanEntity {
         return bookExemplars;
     }
 
-    public void setBookExemplars(Set<BookExemplarEntity> bookExemplars) {
-        this.bookExemplars = bookExemplars;
+    public void addBookExemplar(BookExemplarEntity bookExemplarEntity) {
+        bookExemplars.add(bookExemplarEntity);
+        bookExemplarEntity.setLoan(this);
     }
 
     public CustomerEntity getCustomerEntity() {

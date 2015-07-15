@@ -13,7 +13,7 @@ public class AuthorMapper extends AbstractMapper<AuthorEntity, AuthorTo> {
     @Override
     public AuthorTo mapSource(AuthorEntity source) {
         if (isWriter(source)) {
-            return mapWriter((WriterEntity) unwrap(source));
+            return mapWriter((WriterEntity) HibernateProxyHelper.unwrap(source));
         }
 
         return null;
@@ -60,11 +60,5 @@ public class AuthorMapper extends AbstractMapper<AuthorEntity, AuthorTo> {
         return to != null && to instanceof WriterTo;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> T unwrap(T o) {
-        if (o instanceof HibernateProxy)
-            return (T) ((HibernateProxy)o).getHibernateLazyInitializer().getImplementation();
-        else
-            return o;
-    }
+
 }

@@ -33,6 +33,11 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
     }
 
     @Test
+    public void loanBookShouldWork() {
+        // TODO Implement
+    }
+
+    @Test
     public void testShouldCreateNewBook() {
         // given
         NewBookTo bookToSave = new NewBookTo();

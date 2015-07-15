@@ -8,6 +8,8 @@ import pl.spring.demo.dao.BookExemplarDao;
 import pl.spring.demo.dao.CustomerDao;
 import pl.spring.demo.dao.LoanDao;
 import pl.spring.demo.entity.BookEntity;
+import pl.spring.demo.entity.BookExemplarEntity;
+import pl.spring.demo.entity.CustomerEntity;
 import pl.spring.demo.entity.LoanEntity;
 import pl.spring.demo.mapper.BookMapper;
 import pl.spring.demo.service.BookService;
@@ -61,8 +63,10 @@ public class BookServiceImpl implements BookService {
 
         Date currentDate = currentDateProvider.getCurrentDate();
         LoanEntity loan = new LoanEntity(currentDate);
-        loan.setCustomerEntity(customerDao.getOne(bookLoanRequest.getCustomerId()));
-        loan.getBookExemplars().add(bookExemplarDao.getOne(bookLoanRequest.getBookExemplarId()));
+        CustomerEntity customerEntity = customerDao.getOne(bookLoanRequest.getCustomerId());
+        loan.setCustomerEntity(customerEntity);
+        BookExemplarEntity bookExemplarEntity = bookExemplarDao.getOne(bookLoanRequest.getBookExemplarId());
+        loan.addBookExemplar(bookExemplarEntity);
         loanDao.save(loan);
 
         return new BookLoanResultTo(BookLoanStatus.SUCCESS);

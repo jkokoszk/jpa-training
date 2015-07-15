@@ -2,12 +2,15 @@ package pl.spring.demo.to;
 
 import pl.spring.demo.type.PersonalData;
 
+import java.util.List;
+
 public class CustomerTo {
 
     private Long id;
     private PersonalData personalData;
     private String email;
     private String phone;
+    private List<BookExemplarTo> loanedBooks;
 
     public Long getId() {
         return id;
@@ -39,5 +42,13 @@ public class CustomerTo {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<BookExemplarTo> getLoanedBooks() {
+        return loanedBooks;
+    }
+
+    public void setLoanedBookExemplars(List<BookExemplarTo> loanedBooks) {
+        this.loanedBooks = loanedBooks;
     }
 }

@@ -9,6 +9,9 @@ import pl.spring.demo.mapper.CustomerMapper;
 import pl.spring.demo.service.CustomerService;
 import pl.spring.demo.to.CustomerTo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Transactional
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -27,5 +30,12 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerEntity customerEntity = customerMapper.mapTarget(customerTo);
         customerDao.save(customerEntity);
         return customerMapper.mapSource(customerEntity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CustomerTo> findAllCustomers() {
+        List<CustomerEntity> customerEntities = customerDao.findAll();
+        return new ArrayList<>(customerMapper.mapSourceCollection(customerEntities));
     }
 }

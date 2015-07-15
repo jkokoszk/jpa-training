@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.spring.demo.service.CustomerService;
 import pl.spring.demo.to.CustomerTo;
 
+import java.util.List;
+
 @RestController
 public class CustomerRestService {
 
@@ -18,5 +20,10 @@ public class CustomerRestService {
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     public CustomerTo addCustomer(@RequestBody CustomerTo customer) {
         return customerService.createCustomer(customer);
+    }
+
+    @RequestMapping(value = "/customers", method = RequestMethod.GET)
+    public List<CustomerTo> getCustomers() {
+        return customerService.findAllCustomers();
     }
 }

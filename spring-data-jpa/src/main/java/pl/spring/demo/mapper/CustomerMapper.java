@@ -1,11 +1,26 @@
 package pl.spring.demo.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.spring.demo.entity.BookExemplarEntity;
 import pl.spring.demo.entity.CustomerEntity;
+import pl.spring.demo.to.BookExemplarTo;
 import pl.spring.demo.to.CustomerTo;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class CustomerMapper extends AbstractMapper<CustomerEntity, CustomerTo> {
+
+    private final BookExemplarMapper bookExemplarMapper;
+
+    @Autowired
+    public CustomerMapper(BookExemplarMapper bookExemplarMapper) {
+        this.bookExemplarMapper = bookExemplarMapper;
+    }
 
     @Override
     public CustomerTo mapSource(CustomerEntity source) {
@@ -14,12 +29,19 @@ public class CustomerMapper extends AbstractMapper<CustomerEntity, CustomerTo> {
         customerTo.setEmail(source.getEmail());
         customerTo.setPersonalData(source.getPersonalData());
         customerTo.setPhone(source.getPhoneNumber());
+        customerTo.setLoanedBookExemplars(determineLoanedBookExemplars(source));
         return customerTo;
     }
 
     @Override
     public CustomerEntity mapTarget(CustomerTo target) {
         return new CustomerEntity(target.getId(), target.getPersonalData(), target.getPhone(), target.getEmail());
+    }
+
+    private List<BookExemplarTo> determineLoanedBookExemplars(CustomerEntity customerEntity) {
+        Set<BookExemplarEntity> bookExemplarEntities = new HashSet<>();
+        customerEntity.getLoans().stream().forEach(b -> bookExemplarEntities.addAll(b.getBookExemplars()));
+        return new ArrayList<>(bookExemplarMapper.mapSourceCollection(bookExemplarEntities));
     }
 
 }
