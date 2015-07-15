@@ -5,19 +5,20 @@ import pl.spring.demo.dao.BookExemplarDao;
 import pl.spring.demo.entity.BookExemplarEntity;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 @Repository
 public class BookExemplarDaoImpl extends AbstractDao<BookExemplarEntity, Long> implements BookExemplarDao {
 
     @Override
     public boolean isBookExemplarBorrowed(long bookExemplarId) {
-        Query query = entityManager.createQuery(
+        TypedQuery<Long> query = entityManager.createQuery(
                 "select count(l.id) from LoanEntity l " +
                         "join l.bookExemplars exemplars " +
-                        "where exemplars.id = :bookExemplarId");
+                        "where exemplars.id = :bookExemplarId", Long.class);
 
         query.setParameter("bookExemplarId", bookExemplarId);
-        return (long) query.getSingleResult() > 0;
+        return query.getSingleResult() > 0;
     }
 
 }

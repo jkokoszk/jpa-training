@@ -16,7 +16,7 @@ public class BookSpoilerEntity implements Serializable {
     private String content;
 
     @OneToOne
-    @JoinColumn(name = "BOOK_FK", nullable = false, updatable = true)
+    @JoinColumn(name = "BOOK_FK", nullable = false, updatable = false)
     private BookEntity book;
 
     // for hibernate
