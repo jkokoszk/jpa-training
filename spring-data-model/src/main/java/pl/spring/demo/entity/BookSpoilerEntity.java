@@ -16,9 +16,9 @@ public class BookSpoilerEntity implements Serializable {
     @Column(nullable = false)
     private String content;
 
-//    @OneToOne(optional = false)
-//    @JoinColumn(name = "BOOK_FK", updatable = false, nullable = false)
-//    private BookEntity book;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "BOOK_FK", updatable = false, nullable = false)
+    private BookEntity book;
 
     // for hibernate
     protected BookSpoilerEntity() {
@@ -42,6 +42,6 @@ public class BookSpoilerEntity implements Serializable {
     }
 
     public void setBook(BookEntity book) {
-//        this.book = book;
+        this.book = book;
     }
 }
