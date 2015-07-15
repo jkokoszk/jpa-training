@@ -2,7 +2,6 @@ package pl.spring.demo.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name = "BOOK_SPOILER")
@@ -16,8 +15,8 @@ public class BookSpoilerEntity implements Serializable {
     @Column(nullable = false)
     private String content;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "BOOK_FK", updatable = false, nullable = false)
+    @OneToOne
+    @JoinColumn(name = "BOOK_FK", nullable = false, updatable = true)
     private BookEntity book;
 
     // for hibernate
