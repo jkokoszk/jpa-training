@@ -9,6 +9,20 @@ public class PaperBookExemplarTo extends BookExemplarTo {
     private PaperSize paperSize;
     private BookCover bookCover;
 
+    public PaperBookExemplarTo(String serialNumber, int pagesCount, PaperSize paperSize, BookCover bookCover) {
+        super(serialNumber);
+        this.pagesCount = pagesCount;
+        this.paperSize = paperSize;
+        this.bookCover = bookCover;
+    }
+
+    public PaperBookExemplarTo(Long id, String serialNumber, int pagesCount, PaperSize paperSize, BookCover bookCover) {
+        super(id, serialNumber);
+        this.pagesCount = pagesCount;
+        this.paperSize = paperSize;
+        this.bookCover = bookCover;
+    }
+
     public int getPagesCount() {
         return pagesCount;
     }

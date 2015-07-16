@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.spring.demo.service.BookService;
-import pl.spring.demo.to.BookSearchCriteriaTo;
-import pl.spring.demo.to.BookTo;
-import pl.spring.demo.to.NewBookTo;
+import pl.spring.demo.to.*;
+import pl.spring.demo.type.AudioBookFormat;
+import pl.spring.demo.type.BookCover;
+import pl.spring.demo.type.PaperSize;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -89,6 +90,24 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
         BookTo alreadySavedBook = bookService.createBook(bookToSave);
         // then
         assertNotNull(alreadySavedBook.getId());
+        assertEquals(bookToSave.getSpoiler(), bookService.findBookSpoiler(alreadySavedBook.getId()));
+    }
+
+    @Test
+    public void testShouldCreateNewBookWithExemplars() {
+        // given
+        NewBookTo bookToSave = new NewBookTo();
+        bookToSave.setTitle("Title of new book");
+
+        PaperBookExemplarTo paperBookExemplar1 = new PaperBookExemplarTo("123", 333, PaperSize.A_4, BookCover.HARD);
+        PaperBookExemplarTo paperBookExemplar2 = new PaperBookExemplarTo("234", 222, PaperSize.B_5, BookCover.SOFT);
+        AudioBookExemplarTo audioBookExemplar = new AudioBookExemplarTo("321", AudioBookFormat.AUDIO);
+        bookToSave.setExemplars(new HashSet<>(Arrays.asList(paperBookExemplar1, paperBookExemplar2, audioBookExemplar)));
+        // when
+        BookTo alreadySavedBook = bookService.createBook(bookToSave);
+        // then
+        assertNotNull(alreadySavedBook.getId());
+        assertEquals(3, bookService.findBookExemplars(alreadySavedBook.getId()).size());
     }
 
 }

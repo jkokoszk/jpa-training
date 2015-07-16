@@ -13,4 +13,8 @@ public interface BookService {
     BookLoanResultTo loanBook(BookLoanRequestTo bookLoanRequest);
 
     BookTo createBook(NewBookTo bookToSave);
+
+    String findBookSpoiler(long bookId);
+
+    List<BookExemplarTo> findBookExemplars(long bookId);
 }

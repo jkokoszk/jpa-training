@@ -7,10 +7,7 @@ import pl.spring.demo.dao.AuthorDao;
 import pl.spring.demo.entity.*;
 import pl.spring.demo.to.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -59,7 +56,8 @@ public class BookMapper extends AbstractMapper<BookEntity, BookTo> {
         book.setAuthors(bookAuthors);
 
         Set<BookExemplarEntity> bookExemplars = mapBookExemplars(newBook.getExemplars());
-        book.setBookExemplars(bookExemplars);
+        bookExemplars.stream().forEach(book::addBookExemplar);
+
         return book;
     }
 
@@ -85,7 +83,7 @@ public class BookMapper extends AbstractMapper<BookEntity, BookTo> {
         if (!exemplars.isEmpty()) {
             return exemplars.stream().map(this::mapBookExemplar).collect(Collectors.toSet());
         }
-        return null;
+        return Collections.EMPTY_SET;
     }
 
     private BookExemplarEntity mapBookExemplar(BookExemplarTo bookExemplarTo) {

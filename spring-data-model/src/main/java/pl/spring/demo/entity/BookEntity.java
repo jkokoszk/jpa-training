@@ -61,10 +61,6 @@ public class BookEntity implements Serializable {
         return bookExemplars;
     }
 
-    public void setBookExemplars(Set<BookExemplarEntity> bookExemplars) {
-        this.bookExemplars = bookExemplars;
-    }
-
     public BookSpoilerEntity getBookSpoiler() {
         return bookSpoiler;
     }
@@ -74,5 +70,10 @@ public class BookEntity implements Serializable {
             bookSpoiler.setBook(this);
         }
         this.bookSpoiler = bookSpoiler;
+    }
+
+    public void addBookExemplar(BookExemplarEntity bookExemplar) {
+        bookExemplar.setBook(this);
+        bookExemplars.add(bookExemplar);
     }
 }

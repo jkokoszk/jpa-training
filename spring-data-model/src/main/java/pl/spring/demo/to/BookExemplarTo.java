@@ -8,6 +8,15 @@ public abstract class BookExemplarTo {
     protected Long id;
     protected String serialNumber;
 
+    protected BookExemplarTo(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    protected BookExemplarTo(Long id, String serialNumber) {
+        this(serialNumber);
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

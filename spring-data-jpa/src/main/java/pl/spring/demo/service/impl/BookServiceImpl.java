@@ -7,10 +7,8 @@ import pl.spring.demo.dao.BookDao;
 import pl.spring.demo.dao.BookExemplarDao;
 import pl.spring.demo.dao.CustomerDao;
 import pl.spring.demo.dao.LoanDao;
-import pl.spring.demo.entity.BookEntity;
-import pl.spring.demo.entity.BookExemplarEntity;
-import pl.spring.demo.entity.CustomerEntity;
-import pl.spring.demo.entity.LoanEntity;
+import pl.spring.demo.entity.*;
+import pl.spring.demo.mapper.BookExemplarMapper;
 import pl.spring.demo.mapper.BookMapper;
 import pl.spring.demo.service.BookService;
 import pl.spring.demo.service.helper.CurrentDateProvider;
@@ -30,16 +28,18 @@ public class BookServiceImpl implements BookService {
     private final CustomerDao customerDao;
     private final LoanDao loanDao;
     private final BookExemplarDao bookExemplarDao;
+    private final BookExemplarMapper bookExemplarMapper;
 
     @Autowired
     public BookServiceImpl(BookMapper bookMapper, CurrentDateProvider currentDateProvider, BookDao bookDao, CustomerDao customerDao,
-                           LoanDao loanDao, BookExemplarDao bookExemplarDao) {
+                           LoanDao loanDao, BookExemplarDao bookExemplarDao, BookExemplarMapper bookExemplarMapper) {
         this.bookMapper = bookMapper;
         this.currentDateProvider = currentDateProvider;
         this.bookDao = bookDao;
         this.customerDao = customerDao;
         this.loanDao = loanDao;
         this.bookExemplarDao = bookExemplarDao;
+        this.bookExemplarMapper = bookExemplarMapper;
     }
 
     @Override
@@ -78,5 +78,22 @@ public class BookServiceImpl implements BookService {
         BookEntity bookEntity = bookMapper.mapNewBook(bookToSave);
         bookEntity = bookDao.save(bookEntity);
         return bookMapper.mapSource(bookEntity);
+    }
+
+    @Override
+    public String findBookSpoiler(long bookId) {
+        BookEntity bookEntity = bookDao.find(bookId);
+        if (bookEntity != null) {
+            BookSpoilerEntity bookSpoilerEntity = bookEntity.getBookSpoiler();
+            if (bookSpoilerEntity != null) {
+                return bookSpoilerEntity.getContent();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<BookExemplarTo> findBookExemplars(long bookId) {
+        return new ArrayList<>(bookExemplarMapper.mapSourceCollection(bookExemplarDao.findAllBookExemplars(bookId)));
     }
 }

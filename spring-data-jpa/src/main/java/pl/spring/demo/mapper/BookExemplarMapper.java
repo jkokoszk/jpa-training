@@ -27,28 +27,15 @@ public class BookExemplarMapper extends AbstractMapper<BookExemplarEntity, BookE
     }
 
     private AudioBookExemplarTo mapAudioBookExemplar(AudioBookExemplarEntity source) {
-        AudioBookExemplarTo audioBookExemplarTo = new AudioBookExemplarTo();
-        mapBookExemplarEntity(source, audioBookExemplarTo);
-        audioBookExemplarTo.setFormat(source.getFormat());
-        return audioBookExemplarTo;
+        return new AudioBookExemplarTo(source.getId(), source.getSerialNumber(), source.getFormat());
     }
 
     private PaperBookExemplarTo mapPaperBookExemplar(PaperBookExemplarEntity source) {
-        PaperBookExemplarTo paperBookExemplarTo = new PaperBookExemplarTo();
-        mapBookExemplarEntity(source, paperBookExemplarTo);
-        paperBookExemplarTo.setBookCover(source.getBookCover());
-        paperBookExemplarTo.setPagesCount(source.getPagesCount());
-        paperBookExemplarTo.setPaperSize(source.getPaperSize());
-        return paperBookExemplarTo;
+        return new PaperBookExemplarTo(source.getId(), source.getSerialNumber(), source.getPagesCount(), source.getPaperSize(), source.getBookCover());
     }
 
     private boolean isObjectOfClass(Object object, Class<?> clazz) {
         return object != null && Hibernate.getClass(object) == clazz;
-    }
-
-    private void mapBookExemplarEntity(BookExemplarEntity entity, BookExemplarTo to) {
-        to.setId(entity.getId());
-        to.setSerialNumber(entity.getSerialNumber());
     }
 
     @Override
