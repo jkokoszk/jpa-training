@@ -25,12 +25,95 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
     private BookService bookService;
 
     @Test
-    public void findBooksShouldWork() {
+    public void findBooksShouldFindBooksByTitle() {
         // given
-        // TODO Implement test
+        String title = "Wszyscy mamy";
+        BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
+        searchCriteria.setTitle(title);
         // when
-        List<BookTo> books = bookService.findBooks(new BookSearchCriteriaTo());
+        List<BookTo> books = bookService.findBooks(searchCriteria);
         // then
+        assertEquals(1, books.size());
+    }
+
+    @Test
+    public void findBooksShouldNotFindBooksByNotExistingTitle() {
+        // given
+        String title = "NotExistingTitle123";
+        BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
+        searchCriteria.setTitle(title);
+        // when
+        List<BookTo> books = bookService.findBooks(searchCriteria);
+        // then
+        assertEquals(0, books.size());
+    }
+
+    @Test
+    public void findBooksShouldFindBooksByAuthor() {
+        // given
+        String author = "Popuelin";
+        BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
+        searchCriteria.setAuthor(author);
+        // when
+        List<BookTo> books = bookService.findBooks(searchCriteria);
+        // then
+        assertEquals(4, books.size());
+    }
+
+    @Test
+    public void findBooksShouldFindBooksWithSpoiler() {
+        // given
+        BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
+        searchCriteria.setHasSpoiler(true);
+        // when
+        List<BookTo> books = bookService.findBooks(searchCriteria);
+        // then
+        assertEquals(1, books.size());
+    }
+
+    @Test
+    public void findBooksShouldFindBooksWithoutSpoiler() {
+        // given
+        BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
+        searchCriteria.setHasSpoiler(false);
+        // when
+        List<BookTo> books = bookService.findBooks(searchCriteria);
+        // then
+        assertEquals(7, books.size());
+    }
+
+    @Test
+    public void findBooksShouldFindBooksAvailable() {
+        // given
+        BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
+        searchCriteria.setAvailable(true);
+
+        BookLoanRequestTo loadDetails = new BookLoanRequestTo();
+        loadDetails.setBookExemplarId(26);
+        loadDetails.setCustomerId(1);
+        bookService.loanBook(loadDetails);
+
+        // when
+        List<BookTo> books = bookService.findBooks(searchCriteria);
+        // then
+        assertEquals(7, books.size());
+    }
+
+    @Test
+    public void findBooksShouldFindBooksUnavailable() {
+        // given
+        BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
+        searchCriteria.setAvailable(false);
+
+        BookLoanRequestTo loadDetails = new BookLoanRequestTo();
+        loadDetails.setBookExemplarId(26);
+        loadDetails.setCustomerId(1);
+        bookService.loanBook(loadDetails);
+
+        // when
+        List<BookTo> books = bookService.findBooks(searchCriteria);
+        // then
+        assertEquals(1, books.size());
     }
 
     @Test
