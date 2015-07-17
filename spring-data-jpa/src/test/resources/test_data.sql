@@ -54,7 +54,7 @@ insert into book_spoiler(id, book_fk, content) values (1, 1, 'Od śmierci Elizab
 -- AUTHOR 2 DATA
 
 -- authors
-insert into author (id, type, birth_date, first_name, last_name, nick_name, literary_genre, version) values (2, 'WRITER', TO_DATE('1622/01/15', 'YYYY/MM/DD'), 'Harlan', 'Coben', 'Molier', 'COMEDY', 0);
+insert into author (id, type, birth_date, first_name, last_name, nick_name, literary_genre, version) values (2, 'WRITER', TO_DATE('1622/01/15', 'YYYY/MM/DD'), 'Jean', 'Popuelin', 'Molier', 'COMEDY', 0);
 
 -- books
 insert into book (id, title, version) values (5, 'Rogacz z urojenia', 0);
@@ -94,3 +94,11 @@ insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values 
 insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values (24, 'SOFT', 98, 'A_5');
 insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values (25, 'SOFT', 56, 'B_4');
 insert into paper_book (book_ex_id, book_cover, pages_count, paper_size) values (26, 'HARD', 333, 'A_4');
+
+insert into book_author (author_id, book_id) values (2, 5);
+insert into book_author (author_id, book_id) values (2, 6);
+insert into book_author (author_id, book_id) values (2, 7);
+insert into book_author (author_id, book_id) values (2, 8);
+
+-- customer
+insert into customer(id, email, birth_date, first_name, last_name, phone_number) values (1, 'customer.gmail.pl', TO_DATE('1992/01/15', 'YYYY/MM/DD'), 'Jan', 'Kliendzki', '111-222-333');

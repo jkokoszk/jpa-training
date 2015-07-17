@@ -1,8 +1,13 @@
 package pl.spring.demo.dao.impl;
 
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.jpa.HQLTemplates;
+import com.mysema.query.jpa.JPASubQuery;
+import com.mysema.query.jpa.impl.JPAQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import pl.spring.demo.dao.BookDao;
-import pl.spring.demo.entity.BookEntity;
+import pl.spring.demo.entity.*;
 import pl.spring.demo.to.BookSearchCriteriaTo;
 
 import java.util.List;
@@ -12,7 +17,42 @@ public class BookDaoImpl extends AbstractDao<BookEntity, Long> implements BookDa
 
     @Override
     public List<BookEntity> findBooks(BookSearchCriteriaTo bookSearchCriteria) {
-        // TODO Implement
-        return findAll();
+        final QBookEntity bookEntity = QBookEntity.bookEntity;
+        final JPAQuery query = new JPAQuery(entityManager, HQLTemplates.DEFAULT).from(bookEntity);
+
+        if (bookSearchCriteria != null) {
+            final BooleanBuilder predicate = new BooleanBuilder();
+
+            if (!StringUtils.isEmpty(bookSearchCriteria.getTitle())) {
+                final String title = bookSearchCriteria.getTitle();
+                predicate.and(bookEntity.title.startsWithIgnoreCase(title));
+            }
+            if (!StringUtils.isEmpty(bookSearchCriteria.getAuthor())) {
+                final String author = bookSearchCriteria.getAuthor();
+                predicate.and(bookEntity.authors.any().personalData.firstName.startsWithIgnoreCase(author)
+                        .or(bookEntity.authors.any().personalData.lastName.startsWithIgnoreCase(author)))
+                        .or(bookEntity.authors.any().nickName.startsWithIgnoreCase(author));
+            }
+            if (Boolean.TRUE.equals(bookSearchCriteria.getHasSpoiler())) {
+                predicate.and(bookEntity.bookSpoiler.id.isNotNull());
+            }
+            if (Boolean.FALSE.equals(bookSearchCriteria.getHasSpoiler())) {
+                QBookSpoilerEntity bookSpoilerEntity = QBookSpoilerEntity.bookSpoilerEntity;
+                predicate.and(new JPASubQuery().from(bookSpoilerEntity).where(bookEntity.id.eq(bookSpoilerEntity.book.id)).notExists());
+            }
+            if (Boolean.TRUE.equals(bookSearchCriteria.getAvailable())) {
+                predicate.and(bookEntity.bookExemplars.any().loan.isNull());
+            }
+            if (Boolean.FALSE.equals(bookSearchCriteria.getAvailable())) {
+                QLoanEntity loanEntity = QLoanEntity.loanEntity;
+                QBookExemplarEntity bookExemplarEntity = QBookExemplarEntity.bookExemplarEntity;
+
+                predicate.and(new JPASubQuery().from(loanEntity, bookExemplarEntity).where(bookExemplarEntity.loan.id.eq(loanEntity.id)
+                        .and(bookExemplarEntity.book.id.eq(bookEntity.id))).exists());
+            }
+            query.where(predicate);
+        }
+
+        return query.listResults(bookEntity).getResults();
     }
 }

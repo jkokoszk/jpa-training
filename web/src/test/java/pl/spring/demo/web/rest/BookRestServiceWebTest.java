@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,6 +16,7 @@ import pl.spring.demo.to.BookSearchCriteriaTo;
 import pl.spring.demo.to.BookTo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -50,15 +50,13 @@ public class BookRestServiceWebTest {
     @Test
     public void findBooksShouldCallRestService() throws Exception {
         // given
-        List<BookTo> books = new ArrayList<>();
         BookTo book = new BookTo();
         book.setId(10L);
         book.setTitle("Clean Code");
-        books.add(book);
 
-        when(bookService.findBooks(any(BookSearchCriteriaTo.class))).thenReturn(books);
+        when(bookService.findBooks(any(BookSearchCriteriaTo.class))).thenReturn(Arrays.asList(book));
         // when
-        mockMvc.perform(get("/books?title=Clean&author=UncleBob&hasEBook=false&available=true"))
+        mockMvc.perform(get("/books?title=Clean&author=UncleBob&hasSpoiler=false&available=true"))
                 // then
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("[0].id").value(10))
@@ -69,7 +67,7 @@ public class BookRestServiceWebTest {
         BookSearchCriteriaTo bookSearchCriteria = captor.getValue();
         assertEquals("Clean", bookSearchCriteria.getTitle());
         assertEquals("UncleBob", bookSearchCriteria.getAuthor());
-        assertEquals(false, bookSearchCriteria.getHasEBook());
+        assertEquals(false, bookSearchCriteria.getHasSpoiler());
         assertEquals(true, bookSearchCriteria.getAvailable());
     }
 
