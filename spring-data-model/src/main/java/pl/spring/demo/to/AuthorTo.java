@@ -9,6 +9,7 @@ public abstract class AuthorTo {
     protected Long id;
     private String nickName;
     protected PersonalData personalData;
+    private long version;
 
     public Long getId() {
         return id;
@@ -32,5 +33,13 @@ public abstract class AuthorTo {
 
     public void setPersonalData(PersonalData personalData) {
         this.personalData = personalData;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

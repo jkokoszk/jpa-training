@@ -28,6 +28,9 @@ public class BookEntity implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "book")
     private BookSpoilerEntity bookSpoiler;
 
+    @Version
+    private long version;
+
     // for hibernate
     protected BookEntity() {
     }
@@ -75,5 +78,13 @@ public class BookEntity implements Serializable {
     public void addBookExemplar(BookExemplarEntity bookExemplar) {
         bookExemplar.setBook(this);
         bookExemplars.add(bookExemplar);
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

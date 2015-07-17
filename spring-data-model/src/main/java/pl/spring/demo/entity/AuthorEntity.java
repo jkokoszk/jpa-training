@@ -24,6 +24,8 @@ public abstract class AuthorEntity implements Serializable {
             @AttributeOverride(name = "lastName", column = @Column(name = "LAST_NAME", nullable = false))})
     protected PersonalData personalData;
 
+    @Version
+    protected long version;
 
     // for hibernate
     protected AuthorEntity() {
@@ -35,9 +37,10 @@ public abstract class AuthorEntity implements Serializable {
         this.nickName = nickName;
     }
 
-    protected AuthorEntity(Long id, PersonalData personalData, String nickName) {
+    protected AuthorEntity(Long id, PersonalData personalData, String nickName, long version) {
         this(personalData, nickName);
         this.id = id;
+        this.version = version;
     }
 
     public Long getId() {
@@ -50,5 +53,13 @@ public abstract class AuthorEntity implements Serializable {
 
     public String getNickName() {
         return nickName;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

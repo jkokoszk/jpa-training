@@ -28,6 +28,7 @@ public class BookMapper extends AbstractMapper<BookEntity, BookTo> {
             book.setId(source.getId());
             book.setTitle(source.getTitle());
             book.setAuthors(new ArrayList<>(new AuthorMapper().mapSourceCollection(source.getAuthors())));
+            book.setVersion(source.getVersion());
         }
         return book;
     }
@@ -38,6 +39,7 @@ public class BookMapper extends AbstractMapper<BookEntity, BookTo> {
         if (target != null) {
             book = new BookEntity(target.getId(), target.getTitle());
             book.setAuthors(new HashSet<>(new AuthorMapper().mapTargetCollection(target.getAuthors())));
+            book.setVersion(target.getVersion());
         }
         return book;
     }
@@ -83,7 +85,7 @@ public class BookMapper extends AbstractMapper<BookEntity, BookTo> {
         if (!exemplars.isEmpty()) {
             return exemplars.stream().map(this::mapBookExemplar).collect(Collectors.toSet());
         }
-        return Collections.EMPTY_SET;
+        return Collections.emptySet();
     }
 
     private BookExemplarEntity mapBookExemplar(BookExemplarTo bookExemplarTo) {

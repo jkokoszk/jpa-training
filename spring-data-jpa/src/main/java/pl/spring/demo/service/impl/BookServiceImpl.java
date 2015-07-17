@@ -81,6 +81,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional(readOnly = false)
+    public BookTo updateBook(BookTo bookTo) {
+        BookEntity bookEntity = bookMapper.mapTarget(bookTo);
+        BookEntity savedBookEntity = bookDao.update(bookEntity);
+        bookDao.flush();
+        return bookMapper.mapSource(savedBookEntity);
+    }
+
+    @Override
     public String findBookSpoiler(long bookId) {
         BookEntity bookEntity = bookDao.find(bookId);
         if (bookEntity != null) {

@@ -14,6 +14,8 @@ public interface BookService {
 
     BookTo createBook(NewBookTo bookToSave);
 
+    BookTo updateBook(BookTo bookTo);
+
     String findBookSpoiler(long bookId);
 
     List<BookExemplarTo> findBookExemplars(long bookId);

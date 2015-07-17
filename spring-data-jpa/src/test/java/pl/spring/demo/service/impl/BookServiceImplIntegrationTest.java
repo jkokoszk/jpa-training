@@ -11,6 +11,7 @@ import pl.spring.demo.type.AudioBookFormat;
 import pl.spring.demo.type.BookCover;
 import pl.spring.demo.type.PaperSize;
 
+import javax.persistence.OptimisticLockException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -201,6 +202,36 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
         // then
         assertNotNull(alreadySavedBook.getId());
         assertEquals(3, bookService.findBookExemplars(alreadySavedBook.getId()).size());
+    }
+
+    @Test
+    public void updateBookShouldSaveChangesToTheBook() {
+        // given
+        NewBookTo bookToSave = new NewBookTo();
+        bookToSave.setTitle("Title of new book");
+        bookToSave.setSpoiler("Spoiler sample");
+        BookTo createdBook = bookService.createBook(bookToSave);
+
+        String updatedTitle = "Updated title";
+        createdBook.setTitle(updatedTitle);
+        // when
+        BookTo savedBook = bookService.updateBook(createdBook);
+        // then
+        assertEquals(updatedTitle, savedBook.getTitle());
+        assertTrue(savedBook.getVersion() > createdBook.getVersion());
+    }
+
+    @Test(expected = OptimisticLockException.class)
+    public void updateBookShouldThrowOptimisticLockingExceptionWhenUpdatedVersionLowerThanExisting() {
+        // given
+        NewBookTo bookToSave = new NewBookTo();
+        bookToSave.setTitle("Title of new book");
+        bookToSave.setSpoiler("Spoiler sample");
+        BookTo createdBook = bookService.createBook(bookToSave);
+
+        createdBook.setVersion(createdBook.getVersion() - 1);
+        //when
+        bookService.updateBook(createdBook);
     }
 
 }
