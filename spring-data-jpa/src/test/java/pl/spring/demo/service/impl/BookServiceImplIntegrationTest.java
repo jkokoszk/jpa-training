@@ -88,10 +88,15 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
         BookSearchCriteriaTo searchCriteria = new BookSearchCriteriaTo();
         searchCriteria.setAvailable(true);
 
-        BookLoanRequestTo loadDetails = new BookLoanRequestTo();
-        loadDetails.setBookExemplarId(26);
-        loadDetails.setCustomerId(1);
-        bookService.loanBook(loadDetails);
+        BookLoanRequestTo loadDetails1 = new BookLoanRequestTo();
+        loadDetails1.setBookExemplarId(26);
+        loadDetails1.setCustomerId(1);
+        bookService.loanBook(loadDetails1);
+
+        BookLoanRequestTo loadDetails2 = new BookLoanRequestTo();
+        loadDetails2.setBookExemplarId(14);
+        loadDetails2.setCustomerId(1);
+        bookService.loanBook(loadDetails2);
 
         // when
         List<BookTo> books = bookService.findBooks(searchCriteria);
@@ -109,6 +114,11 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
         loadDetails.setBookExemplarId(26);
         loadDetails.setCustomerId(1);
         bookService.loanBook(loadDetails);
+
+        BookLoanRequestTo loadDetails2 = new BookLoanRequestTo();
+        loadDetails2.setBookExemplarId(14);
+        loadDetails2.setCustomerId(1);
+        bookService.loanBook(loadDetails2);
 
         // when
         List<BookTo> books = bookService.findBooks(searchCriteria);

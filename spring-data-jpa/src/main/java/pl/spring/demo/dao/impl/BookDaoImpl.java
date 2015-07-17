@@ -44,11 +44,12 @@ public class BookDaoImpl extends AbstractDao<BookEntity, Long> implements BookDa
                 predicate.and(bookEntity.bookExemplars.any().loan.isNull());
             }
             if (Boolean.FALSE.equals(bookSearchCriteria.getAvailable())) {
-                QLoanEntity loanEntity = QLoanEntity.loanEntity;
                 QBookExemplarEntity bookExemplarEntity = QBookExemplarEntity.bookExemplarEntity;
+                QLoanEntity loanEntity = QLoanEntity.loanEntity;
 
-                predicate.and(new JPASubQuery().from(loanEntity, bookExemplarEntity).where(bookExemplarEntity.loan.id.eq(loanEntity.id)
-                        .and(bookExemplarEntity.book.id.eq(bookEntity.id))).exists());
+                predicate.and(new JPASubQuery().from(bookExemplarEntity).where(bookExemplarEntity.book.id.eq(bookEntity.id)).count().eq(
+                        new JPASubQuery().from(loanEntity).where(loanEntity.bookExemplars.any().book.id.eq(bookEntity.id)).count()
+                ));
             }
             query.where(predicate);
         }
