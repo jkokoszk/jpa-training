@@ -7,6 +7,7 @@ import java.util.List;
 public class BookTo {
     private long id;
     private String title;
+    private long version;
 
     private List<AuthorTo> authors = new ArrayList<>();
 
@@ -28,6 +29,14 @@ public class BookTo {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 
     public List<AuthorTo> getAuthors() {

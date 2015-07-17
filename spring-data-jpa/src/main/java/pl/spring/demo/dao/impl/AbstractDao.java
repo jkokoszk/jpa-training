@@ -79,6 +79,11 @@ public abstract class AbstractDao<T, K extends Serializable> implements Dao<T, K
         return getOne(id) != null;
     }
 
+    @Override
+    public void flush() {
+        entityManager.flush();
+    }
+
     @SuppressWarnings("unchecked")
     protected Class<T> getDomainClass() {
         if (domainClass == null) {

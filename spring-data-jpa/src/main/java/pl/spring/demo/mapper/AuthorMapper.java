@@ -35,13 +35,15 @@ public class AuthorMapper extends AbstractMapper<AuthorEntity, AuthorTo> {
     }
 
     private WriterEntity mapWriter(WriterTo target) {
-        return new WriterEntity(target.getId(), copyPersonalData(target.getPersonalData()), target.getGenre(), target.getNickName());
+        return new WriterEntity(target.getId(), copyPersonalData(target.getPersonalData()), target.getGenre(), target.getNickName(),
+                target.getVersion());
     }
 
     protected void mapSource(AuthorEntity source, AuthorTo target) {
         target.setId(source.getId());
         target.setNickName(source.getNickName());
         target.setPersonalData(copyPersonalData(source.getPersonalData()));
+        target.setVersion(source.getVersion());
     }
 
     private PersonalData copyPersonalData(PersonalData personalDataToCopy) {
