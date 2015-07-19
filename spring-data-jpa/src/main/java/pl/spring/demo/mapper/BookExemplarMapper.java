@@ -40,7 +40,6 @@ public class BookExemplarMapper extends AbstractMapper<BookExemplarEntity, BookE
 
     @Override
     public BookExemplarEntity mapTarget(BookExemplarTo target) {
-        // TODO Implement
-        return null;
+        throw new UnsupportedOperationException("Conversion from BookExemplarTo to BookExemplarEntity is not implemented yet.");
     }
 }
