@@ -1,11 +1,11 @@
 -- authors
-insert into author (id, type, birth_date, first_name, last_name, nick_name, literary_genre) values (2, 'WRITER', TO_DATE('1622/01/15', 'yyyy/mm/dd'), 'Jean', 'Poquelin', 'Molier', 'COMEDY');
+insert into author (id, type, birth_date, first_name, last_name, nick_name, literary_genre, version) values (2, 'WRITER', DATE('1622-01-15'), 'Jean', 'Poquelin', 'Molier', 'COMEDY', 0);
 
 -- books
-insert into book (id, title) values (5, 'Rogacz z urojenia');
-insert into book (id, title) values (6, 'Szkoła mężów');
-insert into book (id, title) values (7, 'Szkoła żon');
-insert into book (id, title) values (8, 'Świętoszek');
+insert into book (id, title, version) values (5, 'Rogacz z urojenia', 0);
+insert into book (id, title, version) values (6, 'Szkoła mężów', 0);
+insert into book (id, title, version) values (7, 'Szkoła żon', 0);
+insert into book (id, title, version) values (8, 'Świętoszek', 0);
 
 -- book_exemplar
 insert into book_exemplar (id, serial_number, book_fk) values (14, 'ISBN-0014', 5);

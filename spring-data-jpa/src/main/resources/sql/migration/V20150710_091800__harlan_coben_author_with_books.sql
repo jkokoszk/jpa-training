@@ -1,11 +1,11 @@
 -- authors
-insert into author (id, type, birth_date, first_name, last_name, literary_genre) values (1, 'WRITER', TO_DATE('1962/01/04', 'yyyy/mm/dd'), 'Harlan', 'Coben', 'CRIME');
+insert into author (id, type, birth_date, first_name, last_name, literary_genre, version) values (1, 'WRITER', DATE('1962-01-04'), 'Harlan', 'Coben', 'CRIME', 0);
 
 -- books
-insert into book (id, title) values (1, 'Nie mów nikomu');
-insert into book (id, title) values (2, 'Wszyscy mamy tajemnice');
-insert into book (id, title) values (3, 'Schronienie');
-insert into book (id, title) values (4, 'Mistyfikacja');
+insert into book (id, title, version) values (1, 'Nie mów nikomu', 0);
+insert into book (id, title, version) values (2, 'Wszyscy mamy tajemnice', 0);
+insert into book (id, title, version) values (3, 'Schronienie', 0);
+insert into book (id, title, version) values (4, 'Mistyfikacja', 0);
 
 -- book_exemplar
 insert into book_exemplar (id, serial_number, book_fk) values (1, 'ISBN-0001', 1);

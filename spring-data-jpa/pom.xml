@@ -33,9 +33,9 @@
             <version>3.2.1</version>
         </dependency>
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3.0</version>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.11.1.1</version>
         </dependency>
         <dependency>
             <groupId>net.sf.ehcache</groupId>
@@ -48,18 +48,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>3.2.1</version>
-                <configuration>
-                    <configFile>src/main/resources/config/flyway.properties</configFile>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

@@ -77,7 +77,7 @@ public class EmbeddedJetty {
         return context;
     }
 
-    
+
 
     private FilterHolder getEncodingFilterHolder() {
         FilterHolder filterHolder = new FilterHolder();
