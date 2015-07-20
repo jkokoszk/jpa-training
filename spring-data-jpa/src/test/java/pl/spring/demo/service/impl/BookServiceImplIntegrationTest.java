@@ -128,8 +128,19 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
     }
 
     @Test
-    public void loanBookShouldWork() {
-        // TODO Implement
+    public void loaningAlreadyLoanedBookShouldNotBePossible() {
+        // given
+        BookLoanRequestTo bookLoanRequestTo = new BookLoanRequestTo();
+        bookLoanRequestTo.setBookExemplarId(26);
+        bookLoanRequestTo.setCustomerId(1);
+        // when first loan try
+        BookLoanResultTo firstBookLoanResultTo = bookService.loanBook(bookLoanRequestTo);
+        // then
+        assertEquals(BookLoanStatus.SUCCESS, firstBookLoanResultTo.getStatus());
+        // when second loan try
+        BookLoanResultTo secondBookLoanResultTo = bookService.loanBook(bookLoanRequestTo);
+        // then
+        assertEquals(BookLoanStatus.ALREADY_BORROWED, secondBookLoanResultTo.getStatus());
     }
 
     @Test

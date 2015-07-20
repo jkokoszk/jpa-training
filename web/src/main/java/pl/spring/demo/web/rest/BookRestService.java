@@ -32,7 +32,7 @@ public class BookRestService {
         return bookCache.findBooks(searchCriteria);
     }
 
-    @RequestMapping(value = "/book-loan", method = RequestMethod.POST)
+    @RequestMapping(value = "/book-loan", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public BookLoanResultTo loanBook(@RequestBody BookLoanRequestTo bookLoanRequest) {
         return bookService.loanBook(bookLoanRequest);

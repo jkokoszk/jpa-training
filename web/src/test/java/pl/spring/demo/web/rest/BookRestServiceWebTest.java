@@ -5,26 +5,26 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.spring.demo.service.BookService;
-import pl.spring.demo.to.BookSearchCriteriaTo;
-import pl.spring.demo.to.BookTo;
+import pl.spring.demo.to.*;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -72,7 +72,26 @@ public class BookRestServiceWebTest {
     }
 
     @Test
-    public void testLoanBook() {
-        // TODO Implement test
+    public void loanBookShouldCallBookServiceAndReturnRequestResult() throws Exception {
+        // given
+        byte[] requestContent = readFileToBytes("classpath:requests/loanBook.json");
+        when(bookService.loanBook(any(BookLoanRequestTo.class))).thenReturn(new BookLoanResultTo(BookLoanStatus.SUCCESS));
+        // when
+        ResultActions resultActions = mockMvc.perform(post("/book-loan")
+                .content(requestContent)
+                .contentType(MediaType.APPLICATION_JSON));
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("status").value("SUCCESS"));
+
+        ArgumentCaptor<BookLoanRequestTo> captor = ArgumentCaptor.forClass(BookLoanRequestTo.class);
+        verify(bookService).loanBook(captor.capture());
+        BookLoanRequestTo bookLoanRequestTo = captor.getValue();
+        assertEquals(1L, bookLoanRequestTo.getBookExemplarId());
+        assertEquals(2L, bookLoanRequestTo.getCustomerId());
+    }
+
+    private byte[] readFileToBytes(String resourcePath) throws IOException {
+        return Files.readAllBytes(wac.getResource(resourcePath).getFile().toPath());
     }
 }
