@@ -27,6 +27,10 @@ public class CustomerEntity {
     @OneToMany(mappedBy = "customerEntity")
     private Set<LoanEntity> loans = new HashSet<>();
 
+    // strange behavior, orphanRemoval must be used together with cascade, otherwise it does not work
+    @OneToMany(mappedBy = "customerEntity", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    private Set<CustomerCardEntity> cards = new HashSet<>();
+
     // for hibernate
     protected CustomerEntity() {
 
@@ -65,5 +69,14 @@ public class CustomerEntity {
 
     public void setLoans(Set<LoanEntity> loans) {
         this.loans = loans;
+    }
+
+    public Set<CustomerCardEntity> getCards() {
+        return cards;
+    }
+
+    public void addCard(CustomerCardEntity customerCardEntity) {
+        cards.add(customerCardEntity);
+        customerCardEntity.setCustomerEntity(this);
     }
 }
