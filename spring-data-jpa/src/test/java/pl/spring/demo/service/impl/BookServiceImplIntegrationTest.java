@@ -245,4 +245,18 @@ public class BookServiceImplIntegrationTest extends AbstractDatabaseTest {
         bookService.updateBook(createdBook);
     }
 
+    @Test
+    public void testShouldRemoveBookWithAllExemplarsAndSpoiler() {
+        // given
+        final long bookIdToRemove = 1L;
+        assertFalse(bookService.findBookExemplars(bookIdToRemove).isEmpty());
+        assertNotNull(bookService.findBookSpoiler(bookIdToRemove));
+        // when
+        bookService.removeBookById(bookIdToRemove);
+        // then
+        assertNull(bookService.findBookById(bookIdToRemove));
+        assertNull(bookService.findBookSpoiler(bookIdToRemove));
+        assertTrue(bookService.findBookExemplars(bookIdToRemove).isEmpty());
+    }
+
 }
