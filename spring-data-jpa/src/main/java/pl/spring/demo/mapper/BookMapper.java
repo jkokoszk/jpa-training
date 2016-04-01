@@ -32,7 +32,7 @@ public class BookMapper extends AbstractMapper<Book, BookTo> {
     }
 
     @Override
-    public BookTo convertToBookTo(Book source) {
+    public BookTo convertToTransportObject(Book source) {
         BookTo book = null;
         if (source != null) {
             book = new BookTo();
@@ -45,7 +45,7 @@ public class BookMapper extends AbstractMapper<Book, BookTo> {
     }
 
     @Override
-    public Book convertToBook(BookTo target) {
+    public Book convertToEntity(BookTo target) {
         Book book = null;
         if (target != null) {
             book = new Book(target.getId(), target.getTitle());

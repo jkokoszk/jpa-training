@@ -3,18 +3,18 @@ package pl.spring.demo.mapper;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public abstract class AbstractMapper<S, T> {
+public abstract class AbstractMapper<Entity, To> {
 
-    public abstract T convertToBookTo(S source);
+    public abstract To convertToTransportObject(Entity source);
 
-    public abstract S convertToBook(T target);
+    public abstract Entity convertToEntity(To target);
 
-    public Collection<T> mapSourceCollection(Collection<S> collection) {
-        return collection.stream().map(this::convertToBookTo).collect(Collectors.toList());
+    public Collection<To> mapSourceCollection(Collection<Entity> collection) {
+        return collection.stream().map(this::convertToTransportObject).collect(Collectors.toList());
     }
 
-    public Collection<S> mapTargetCollection(Collection<T> collection) {
-        return collection.stream().map(this::convertToBook).collect(Collectors.toList());
+    public Collection<Entity> mapTargetCollection(Collection<To> collection) {
+        return collection.stream().map(this::convertToEntity).collect(Collectors.toList());
     }
 
 }

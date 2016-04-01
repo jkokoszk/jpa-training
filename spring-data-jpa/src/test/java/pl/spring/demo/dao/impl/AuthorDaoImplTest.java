@@ -14,7 +14,7 @@ import pl.spring.demo.entity.Author;
 import pl.spring.demo.service.impl.AbstractDatabaseTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+@ContextConfiguration(locations="CommonDaoTest-context.xml")
 public class AuthorDaoImplTest extends AbstractDatabaseTest {
 
     @Autowired
@@ -23,7 +23,7 @@ public class AuthorDaoImplTest extends AbstractDatabaseTest {
     @Test
     public void testShouldFindAllAuthors() {
         // when
-        List<Author> allAuthors = authorDao.findAllAuthors(Author.class);
+        List<Author> allAuthors = authorDao.findAll();
         // then
         Assert.assertEquals(3, allAuthors.size());
     }

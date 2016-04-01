@@ -7,7 +7,7 @@ import pl.spring.demo.type.PersonalData;
 public class AuthorMapper extends AbstractMapper<Author, AuthorTo> {
 
     @Override
-    public AuthorTo convertToBookTo(Author source) {
+    public AuthorTo convertToTransportObject(Author source) {
     	if(source != null){
     		return mapAuthor(source);
     	}
@@ -15,7 +15,7 @@ public class AuthorMapper extends AbstractMapper<Author, AuthorTo> {
     }
 
     @Override
-    public Author convertToBook(AuthorTo target) {
+    public Author convertToEntity(AuthorTo target) {
     	if(target != null){
     		return new Author(target.getId(), copyPersonalData(target.getPersonalData()), target.getNickName(),
                 target.getVersion());

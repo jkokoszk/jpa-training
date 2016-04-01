@@ -31,7 +31,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookTo findBookById(long bookId) {
-        return bookMapper.convertToBookTo(bookDao.find(bookId));
+        return bookMapper.convertToTransportObject(bookDao.find(bookId));
     }
 
     @Override
@@ -45,16 +45,16 @@ public class BookServiceImpl implements BookService {
     public BookTo createBook(NewBookTo bookToSave) {
         Book bookEntity = bookMapper.mapNewBook(bookToSave);
         bookEntity = bookDao.save(bookEntity);
-        return bookMapper.convertToBookTo(bookEntity);
+        return bookMapper.convertToTransportObject(bookEntity);
     }
 
     @Override
     @Transactional(readOnly = false)
     public BookTo updateBook(BookTo bookTo) {
-        Book bookEntity = bookMapper.convertToBook(bookTo);
+        Book bookEntity = bookMapper.convertToEntity(bookTo);
         Book savedBookEntity = bookDao.update(bookEntity);
         bookDao.flush();
-        return bookMapper.convertToBookTo(savedBookEntity);
+        return bookMapper.convertToTransportObject(savedBookEntity);
     }
 
     @Override

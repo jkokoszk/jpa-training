@@ -14,8 +14,8 @@ public class LibraryDaoImpl extends AbstractDao<Library, Long> implements Librar
 
 	@Override
 	public List<Library> findByName(String name) {
-		Query query = entityManager.createQuery("SELECT distinct o FROM Library library "
-				+ "WHERE library.name like :name", Library.class);
+		Query query = entityManager.createQuery("SELECT library FROM Library library "
+				+ "WHERE upper(library.name) like concat(upper(:name), '%')", Library.class);
 		query.setParameter("name",  name);
 		return query.getResultList();
 	}
