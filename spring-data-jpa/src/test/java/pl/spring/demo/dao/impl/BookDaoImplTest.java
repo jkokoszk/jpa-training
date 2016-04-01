@@ -9,22 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import pl.spring.demo.dao.AuthorDao;
-import pl.spring.demo.entity.Author;
+import pl.spring.demo.dao.BookDao;
+import pl.spring.demo.entity.Book;
 import pl.spring.demo.service.impl.AbstractDatabaseTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
-public class AuthorDaoImplTest extends AbstractDatabaseTest {
-
-    @Autowired
-    private AuthorDao authorDao;
+@ContextConfiguration(locations="CommonDaoTest-context.xml")
+public class BookDaoImplTest extends AbstractDatabaseTest{
+	@Autowired
+    private BookDao bookDao;
 
     @Test
-    public void testShouldFindAllAuthors() {
+    public void shouldFindAllAuthors() {
         // when
-        List<Author> allAuthors = authorDao.findAllAuthors(Author.class);
+        List<Book> allAuthors = bookDao.findAll();
         // then
-        Assert.assertEquals(3, allAuthors.size());
+        Assert.assertEquals(8, allAuthors.size());
     }
 }

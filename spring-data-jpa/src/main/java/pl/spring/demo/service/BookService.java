@@ -10,15 +10,11 @@ public interface BookService {
 
     List<BookTo> findBooks(BookSearchCriteriaTo searchCriteria);
 
-    BookLoanResultTo loanBook(BookLoanRequestTo bookLoanRequest);
-
     BookTo createBook(NewBookTo bookToSave);
 
     BookTo updateBook(BookTo bookTo);
 
-    String findBookSpoiler(long bookId);
-
-    List<BookExemplarTo> findBookExemplars(long bookId);
+    String findBookReview(long bookId);
 
     void removeBookById(long bookIdToRemove);
 }

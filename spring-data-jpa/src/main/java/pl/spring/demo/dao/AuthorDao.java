@@ -1,10 +1,10 @@
 package pl.spring.demo.dao;
 
-import pl.spring.demo.entity.AuthorEntity;
+import pl.spring.demo.entity.Author;
 
 import java.util.List;
 
-public interface AuthorDao extends Dao<AuthorEntity, Long> {
+public interface AuthorDao extends Dao<Author, Long> {
 
-    public <T extends AuthorEntity> List<T> findAllAuthors(Class<T> clazz);
+    public <T extends Author> List<T> findAllAuthors(Class<T> clazz);
 }

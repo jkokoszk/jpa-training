@@ -7,6 +7,7 @@ import java.util.List;
 public class BookTo {
     private long id;
     private String title;
+    private long libraryId;
     private long version;
 
     private List<AuthorTo> authors = new ArrayList<>();
@@ -46,4 +47,12 @@ public class BookTo {
     public void setAuthors(List<AuthorTo> authors) {
         this.authors = authors;
     }
+
+	public long getLibraryId() {
+		return libraryId;
+	}
+
+	public void setLibraryId(long libraryId) {
+		this.libraryId = libraryId;
+	}
 }

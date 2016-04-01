@@ -6,10 +6,10 @@ import java.util.Set;
 public class NewBookTo {
 
     private String title;
-    private String spoiler;
-
+    private String review;
+private Long libraryId;
+    
     private Set<Long> authors = new HashSet<>();
-    private Set<? extends BookExemplarTo> exemplars = new HashSet<>();
 
     public String getTitle() {
         return title;
@@ -19,12 +19,12 @@ public class NewBookTo {
         this.title = title;
     }
 
-    public String getSpoiler() {
-        return spoiler;
+    public String getReview() {
+        return review;
     }
 
-    public void setSpoiler(String spoiler) {
-        this.spoiler = spoiler;
+    public void setReview(String review) {
+        this.review = review;
     }
 
     public Set<Long> getAuthors() {
@@ -35,11 +35,11 @@ public class NewBookTo {
         this.authors = authors;
     }
 
-    public Set<? extends BookExemplarTo> getExemplars() {
-        return exemplars;
-    }
+	public Long getLibraryId() {
+		return libraryId;
+	}
 
-    public void setExemplars(Set<? extends BookExemplarTo> exemplars) {
-        this.exemplars = exemplars;
-    }
+	public void setLibraryId(Long libraryId) {
+		this.libraryId = libraryId;
+	}
 }

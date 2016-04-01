@@ -1,10 +1,8 @@
 package pl.spring.demo.to;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import pl.spring.demo.type.PersonalData;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
-public abstract class AuthorTo {
+public class AuthorTo {
 
     protected Long id;
     private String nickName;

@@ -6,8 +6,7 @@ public class BookSearchCriteriaTo {
 
     private String title;
     private String author;
-    private Boolean hasSpoiler;
-    private Boolean available;
+    private Boolean hasReview;
 
     public String getTitle() {
         return title;
@@ -25,21 +24,14 @@ public class BookSearchCriteriaTo {
         this.author = author;
     }
 
-    public Boolean getHasSpoiler() {
-        return hasSpoiler;
+    public Boolean getHasReview() {
+        return hasReview;
     }
 
-    public void setHasSpoiler(Boolean hasSpoiler) {
-        this.hasSpoiler = hasSpoiler;
+    public void setHasReview(Boolean hasSpoiler) {
+        this.hasReview = hasSpoiler;
     }
 
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -49,13 +41,12 @@ public class BookSearchCriteriaTo {
         BookSearchCriteriaTo that = (BookSearchCriteriaTo) o;
 
         return Objects.equal(author, that.author)
-                && Objects.equal(available, that.available)
-                && Objects.equal(hasSpoiler, that.hasSpoiler)
+                && Objects.equal(hasReview, that.hasReview)
                 && Objects.equal(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(author, available, hasSpoiler, title);
+        return Objects.hashCode(author, hasReview, title);
     }
 }
