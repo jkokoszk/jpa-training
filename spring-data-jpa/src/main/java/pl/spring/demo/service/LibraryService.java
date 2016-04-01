@@ -11,4 +11,5 @@ public interface LibraryService {
 	void changeLibraryName(long id, String newName);
 	void removeLibrary(long id);
 	void addBookToLibrary(long libraryId, long bookId);
+	Collection<LibraryTo> findLibrariesByAuthor(String lastName);
 }

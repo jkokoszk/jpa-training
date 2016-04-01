@@ -19,4 +19,14 @@ public class LibraryDaoImpl extends AbstractDao<Library, Long> implements Librar
 		query.setParameter("name",  name);
 		return query.getResultList();
 	}
+
+	@Override
+	public List<Library> findLibrariesByAuthor(String lastName) {
+		Query query = entityManager.createQuery("SELECT library FROM Library library "
+				+ "JOIN FETCH library.books book "
+				+ "JOIN FETCH book.authors author "
+				+ "WHERE author.personalData.lastName =:lastName", Library.class);
+		query.setParameter("lastName", lastName);
+		return query.getResultList();
+	}
 }

@@ -60,10 +60,7 @@ public class BookTo {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((authors == null) ? 0 : authors.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((libraryTo == null) ? 0 : libraryTo.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
 
@@ -76,25 +73,12 @@ public class BookTo {
 		if (getClass() != obj.getClass())
 			return false;
 		BookTo other = (BookTo) obj;
-		if (authors == null) {
-			if (other.authors != null)
-				return false;
-		} else if (!authors.equals(other.authors))
-			return false;
 		if (id != other.id)
-			return false;
-		if (libraryTo == null) {
-			if (other.libraryTo != null)
-				return false;
-		} else if (!libraryTo.equals(other.libraryTo))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
 			return false;
 		return true;
 	}
+
+	
 
 	
 }

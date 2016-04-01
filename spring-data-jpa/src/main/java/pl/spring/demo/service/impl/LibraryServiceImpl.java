@@ -69,4 +69,11 @@ public class LibraryServiceImpl implements LibraryService{
 		Book book = bookDao.find(bookId);
 		library.addBook(book);
 	}
+
+	@Override
+	public Collection<LibraryTo> findLibrariesByAuthor(String lastName) {
+		List<Library> allLibraries = libraryDao.findAll();
+		List<Library> library = libraryDao.findLibrariesByAuthor(lastName);
+		return libraryMapper.mapSourceCollection(library);
+	}
 }
